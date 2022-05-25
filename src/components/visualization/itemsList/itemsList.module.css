@@ -1,0 +1,23 @@
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+.table,
+.table th,
+.table td {
+  border: 1px solid;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table thead th:nth-child(1) {
+  width: 40%;
+}
+
+.table thead th:nth-child(2) {
+  width: 40%;
+}
+
+.table thead th:nth-child(3) {
+  width: 20%;
+}

@@ -1,0 +1,88 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  overflow-x: hidden;
+}
+:root {
+  --colorRed: #e71224;
+  --colorGrey: #eaecef;
+  --colorLightGrey: #fefefe;
+  --colorDarkGrey: #aaaaaa;
+  --colorBlack: #000000;
+  --colorBlackOpacityLigth: RGB(0, 0, 0, 0.1);
+  --colorBlackOpacityDark: RGB(0, 0, 0, 0.8);
+  --colorWhite: #ffffff;
+  --colorRedOpacity: RGB(231, 18, 36, 0.2);
+  --boxShadow: 8px 8px 15px rgb(0 0 0 / 25%);
+}
+h1,
+h2,
+h3 {
+  text-align: center;
+  margin: 10px;
+}
+h1 {
+  font-size: 40px;
+  margin: 10px;
+}
+select {
+  text-align: center;
+  border: 1px solid var(--colorGrey);
+  box-shadow: inset var(--colorBlackOpacityLigth);
+  border-radius: 4px;
+  background-color: var(--colorLightGrey);
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+input,
+textarea {
+  border: 1px solid var(--colorGrey);
+  box-shadow: inset 0 1px 2px var(--colorBlackOpacityLigth);
+  border-radius: 4px;
+  background-color: var(--colorLightGrey);
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  background-color: var(--colorGrey);
+  border: 1px solid var(--colorGrey);
+  box-shadow: inset 0 1px 2px var(--colorBlackOpacityLigth);
+}
+
+select:focus {
+  background-color: var(--colorGrey);
+}
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  border: 1px solid var(--colorGrey);
+  border-radius: 4px;
+  background-color: var(--colorLightGrey);
+  resize: none;
+}
+
+button[type="submit"] {
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+}
+
+#date {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+#date div {
+  max-width: 100px;
+  padding: 0;
+  margin: 2px;
+}

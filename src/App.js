@@ -8,7 +8,7 @@ import { Dashboard } from "./views/dashboard/Dashboard";
 import { useState, useEffect } from "react";
 import apiLibrary from "./api";
 import { EditItem } from "./views/editItem/EditItem";
-import Aqui from "./Aqui"
+
 
 function App() {
   const [authors, setAuthors] = useState([]);
@@ -148,7 +148,7 @@ function App() {
               }
             />
             <Route path="*" element={<Navigate replace to="/" />} />
-            <Route path="/pruebas" element={<Aqui/>}/>
+            {/* <Route path="/pruebas" element={<Aqui/>}/> */}
           </Route>
         </Routes>
       </HashRouter>

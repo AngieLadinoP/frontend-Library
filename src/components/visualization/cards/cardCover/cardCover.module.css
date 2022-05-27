@@ -1,0 +1,47 @@
+.cardBook {
+    text-align: center;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    margin: 10px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.cover {
+    width: auto;
+    height: 35vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
+    margin: auto;
+}
+
+.cover img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 4px;
+}
+
+.cover:hover img {
+    transform: scale(1.1);
+}
+
+.card:hover {
+    transition: all 0.3s ease-in-out;
+}
+
+.cardBook a {
+    text-decoration: none;
+    color: black;
+}
+.cardBook a:hover {
+    text-decoration: underline;
+    color: black;
+}

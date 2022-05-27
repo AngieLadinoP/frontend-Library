@@ -1,5 +1,33 @@
+.library {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+}
+.sortOptions {
+    display: flex;
+    width: 100%;
+}
 .visualization {
-  display: flex;
-  margin: auto;
-  width: 90%;
+    display: flex;
+    margin: auto;
+    width: 90%;
+}
+
+.field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.field__select div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    gap: 2px;
+    margin: 2px;
 }

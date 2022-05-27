@@ -1,29 +1,32 @@
 .container {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
 }
 .menu {
-  width: 200px;
-  padding: 20px 0;
-  overflow: hidden;
-  border: 1px solid var(--colorGrey);
-  box-shadow: inset 0 1px 2px rgb(10 10 10 / 10%);
-  background-color: #fefefe;
-  font-weight: normal;
-  line-height: 1.5;
+    width: 200px;
+    padding: 20px 0;
+    overflow: hidden;
+    border: 1px solid var(--colorGrey);
+    box-shadow: inset 0 1px 2px rgb(10 10 10 / 10%);
+    background-color: #fefefe;
+    font-weight: normal;
+    line-height: 1.5;
 }
 
 .outlet {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column-reverse;
-  }
-  .menu {
-    width: 100%;
-    overflow: hidden;
-  }
+    .container {
+        flex-direction: column-reverse;
+    }
+    .menu {
+        width: 100%;
+        overflow: hidden;
+    }
+    .outlet {
+        height: calc(100vh- 200px);
+    }
 }

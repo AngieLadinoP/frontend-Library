@@ -105,9 +105,8 @@ export const AddItem = ({
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const res = await apiLibrary.post("/api/books", book);
-        addAuthorBooks(res.data.id, authorsId);
+        addAuthorBooks(res.data.id, res.data.authorsId);
         fetchBooks();
         setBook({
             collectionId: "",
@@ -322,7 +321,7 @@ export const AddItem = ({
                         />
                     </div>
                 </div>
-                {/* pUBLISH date */}
+                {/* Publish date*/}
                 <div className={styles.field}>
                     <label>Fecha de publicación</label>
                     <div id="date">
@@ -336,6 +335,7 @@ export const AddItem = ({
                                 onChange={handleInputChange}
                                 id="publishDay"
                                 placeholder="DD"
+                                list="days"
                             />
                         </div>
                         <div>
@@ -359,6 +359,7 @@ export const AddItem = ({
                                 onChange={handleInputChange}
                                 id="publishYear"
                                 placeholder="YYYY"
+                                max={2100}
                                 required
                             />
                         </div>

@@ -1,72 +1,72 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .form {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  border: 1px solid var(--colorGrey);
-  box-shadow: inset 0 1px 2px rgb(10 10 10 / 10%);
-  border-radius: 4px;
-  background-color: var(--colorLightGrey);
-  margin: 20px auto;
-  gap: 10px;
-  padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    border: 1px solid var(--colorGrey);
+    box-shadow: inset 0 1px 2px rgb(10 10 10 / 10%);
+    border-radius: 4px;
+    background-color: var(--colorLightGrey);
+    margin: 20px auto;
+    gap: 10px;
+    padding: 10px 5px;
 }
 
 .field {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  justify-content: center;
-  align-items: center;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    justify-content: center;
+    align-items: center;
 }
 
 .field__select div {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-  gap: 2px;
-  margin: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    gap: 2px;
+    margin: 2px;
 }
 .field__authors {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 .field__authors p {
-  align-self: start;
+    align-self: start;
 }
 
 .addIcon {
-  font-size: 25px;
-  cursor: pointer;
+    font-size: 25px;
+    cursor: pointer;
 }
 .removeIcon {
-  cursor: pointer;
+    cursor: pointer;
 }
 .prevText {
-  font-size: smaller;
-  font-weight: lighter;
-  font-style: oblique;
-  grid-column: span 2;
+    font-size: smaller;
+    font-weight: lighter;
+    font-style: oblique;
+    grid-column: span 2;
 }
 .submitButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 2;
 }
 @media (max-width: 768px) {
-  .form label {
-    align-self: flex-start;
-    width: 100%;
-  }
+    .form label {
+        align-self: flex-start;
+        width: 100%;
+    }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-  }
+    .field {
+        display: flex;
+        flex-direction: column;
+    }
 }

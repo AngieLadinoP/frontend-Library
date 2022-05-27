@@ -1,104 +1,101 @@
 import React, { useState } from "react";
-import { ItemsSummary } from "../../components/visualization/itemsSummary/ItemsSummary";
-import { ItemsList } from "../../components/visualization/itemsList/ItemsList";
-import { ItemsCover } from "../../components/visualization/itemsCover/ItemsCover";
 import { BsCardList } from "react-icons/bs";
 import { MdCalendarViewMonth } from "react-icons/md";
 import { VscPreview } from "react-icons/vsc";
+import { BiSearchAlt } from "react-icons/bi";
 import styles from "./library.module.css";
+import { Visualization } from "../../components/visualization/Visualization";
 export const Library = ({
-  authors,
-  books,
-  categories,
-  collections,
-  languages,
-  publishers,
-  series,
+    authors,
+    books,
+    categories,
+    collections,
+    languages,
+    publishers,
+    series,
 }) => {
-  //Filters
-  const [collection, setCollection] = useState("");
-  const [view, setView] = useState("");
-  const visualization = [
-    { name: "Lista", icon: <BsCardList />, value: "list" },
-    { name: "Portadas", icon: <MdCalendarViewMonth />, value: "cover" },
-    { name: "Detalles", icon: <VscPreview />, value: "details" },
-  ];
+    //Filters
+    const [collection, setCollection] = useState({
+        idCollection: "",
+        collectionName: "",
+    });
+    const [view, setView] = useState({ display: "" });
+    const visualization = [
+        { name: "Lista", icon: <BsCardList />, value: "list" },
+        { name: "Portadas", icon: <MdCalendarViewMonth />, value: "cover" },
+        { name: "Detalles", icon: <VscPreview />, value: "summary" },
+    ];
+    const [searchedWord, setSearchedWord] = useState({ word: "" });
+    const handleInputChange = (e) => {
+        setCollection({ [e.target.name]: e.target.value });
+        setView({ [e.target.name]: e.target.value });
+        setSearchedWord({ [e.target.name]: e.target.value });
+    };
+    console.log(collection);
+    return (
+        <div className={styles.library}>
+            {/* Search bar */}
+            <div className={`${styles.field} ${styles.field_search}`}>
+                <label htmlFor="searchedWord">
+                    <BiSearchAlt className={styles.searchIcon} />
+                </label>
+                <input
+                    list="books"
+                    name="word"
+                    type="text"
+                    value={searchedWord.word}
+                    onChange={handleInputChange}
+                />
+            </div>
+            <div className={styles.sortOptions}>
+                {/*Select collection*/}
+                <div className={`${styles.field} ${styles.field__select}`}>
+                    <label htmlFor="collection">
+                        Colección
+                        <select
+                            aria-label="Collection"
+                            name="collectionName"
+                            id="collection"
+                            onChange={handleInputChange}
+                            defaultValue=""
+                        >
+                            <option value="">---Colección---</option>
+                            {collections.length !== 0
+                                ? collections.map((item, index) => (
+                                      <option value={item.id} key={index}>
+                                          {item.collectionName}
+                                      </option>
+                                  ))
+                                : null}
+                        </select>
+                    </label>
+                </div>
+                {/* Select visualization */}
+                <div className={`${styles.field} ${styles.field__select}`}>
+                    <label htmlFor="visualization">
+                        Visualización
+                        <select
+                            aria-label="Visualization"
+                            name="display"
+                            id="visualization"
+                            onChange={handleInputChange}
+                            defaultValue="cover"
+                        >
+                            {visualization.length !== 0
+                                ? visualization.map((item, index) => (
+                                      <option value={item.value} key={index}>
+                                          {item.name}
+                                      </option>
+                                  ))
+                                : null}
+                        </select>
+                    </label>
+                </div>
+            </div>
 
-  const [searchedWord, setSearchedWord] = useState("");
-  const handleInputChange = (e) => {
-    if (e) {
-      setCollection({ ...collection, [e.target.name]: e.target.value });
-      setView(e.target.value);
-    }
-  };
-
-  const handleInput = (e) => {
-    setSearchedWord(e.target.value);
-  };
-  return (
-    <div>
-      {/*
-      -- Filtro para escoger la colección 
-      -- Filtro para escoger la vista (lista, portadas, portadas con info, etc) 
-      -- Filtro para ordenar por título, autor, fecha agregado, fecha publicación, etc) 
-      */}
-      <label>
-        Colección
-        <select
-          aria-label="Collection"
-          name="collection"
-          onChange={handleInputChange}
-          defaultValue=""
-        >
-          <option value="">---Colección---</option>
-          {collections.length !== 0
-            ? collections.map((item, index) => (
-                <option value={item.id} key={index}>
-                  {item.collectionName}
-                </option>
-              ))
-            : null}
-        </select>
-      </label>
-      <label>
-        Visualización
-        <select
-          aria-label="Visualization"
-          name="visualization"
-          onChange={handleInputChange}
-          defaultValue="cover"
-        >
-          {visualization.length !== 0
-            ? visualization.map((item, index) => (
-                <option value={item.value} key={index}>
-                  {item.name}
-                </option>
-              ))
-            : null}
-        </select>
-      </label>
-
-      <div>
-        <label htmlFor="searchedWord">Buscar</label>
-        <input
-          list="books"
-          name="searchedWord"
-          type="text"
-          value={searchedWord}
-          onChange={handleInput}
-        />
-        {searchedWord}
-      </div>
-
-      <div className={styles.visualization}>
-        {view === "list" ? (
-          <ItemsList books={books} />
-        ) : view === "details" ? (
-          <ItemsSummary books={books} />
-        ) : (
-          <ItemsCover books={books} />
-        )}
-      </div>
-    </div>
-  );
+            <div className={styles.visualization}>
+                <Visualization display={view.display} books={books} />
+            </div>
+        </div>
+    );
 };

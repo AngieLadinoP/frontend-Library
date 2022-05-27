@@ -27,8 +27,10 @@
         width: 100%;
         overflow: hidden;
         height: 80px;
+        position: fixed;
+        z-index: 2;
     }
     .outlet {
-        height: calc(100vh - 80px);
+        margin: 0 auto 80px auto;
     }
 }

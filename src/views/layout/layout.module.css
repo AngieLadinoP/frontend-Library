@@ -20,13 +20,15 @@
 }
 @media (max-width: 768px) {
     .container {
+        height: 100vh;
         flex-direction: column-reverse;
     }
     .menu {
         width: 100%;
         overflow: hidden;
+        height: 80px;
     }
     .outlet {
-        height: calc(100vh- 200px);
+        height: calc(100vh - 80px);
     }
 }

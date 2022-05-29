@@ -28,7 +28,7 @@ export const Menu = () => {
         {
             icon: <BsFileEarmarkBarGraph className={styles.icon} />,
             text: "Dashboard",
-            path: "/library/dashboard",
+            path: "/dashboard",
         },
         {
             icon: <AiOutlineSetting className={styles.icon} />,
@@ -61,7 +61,7 @@ export const Menu = () => {
         {
             icon: <BsFileEarmarkBarGraph className={styles.icon} />,
             text: "Dashboard",
-            path: "/library/dashboard",
+            path: "/dashboard",
         },
         {
             icon: <AiOutlineSetting className={styles.icon} />,

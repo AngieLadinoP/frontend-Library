@@ -1,0 +1,19 @@
+.table {
+    width: 100%;
+    table-layout: fixed;
+}
+.table,
+.table th,
+.table td {
+    border: 1px solid;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px;
+    width: max-content;
+}
+.table th {
+    background-color: var(--colorRedOpacity);
+}
+
+@media (max-width: 450px) {
+}

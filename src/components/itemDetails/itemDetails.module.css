@@ -1,167 +1,167 @@
 .details__container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 30px auto;
-  width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 30px auto;
+    width: 90%;
 }
 .options {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px;
-  box-shadow: 4px 4px 4px rgb(0 0 0 / 25%);
-  margin: auto;
-  position: fixed;
-  background-color: var(--colorWhite);
-  height: 50px;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 4px 4px 4px rgb(0 0 0 / 25%);
+    margin: auto;
+    position: fixed;
+    background-color: var(--colorWhite);
+    height: 50px;
 }
 .labelIcon {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
 }
 .options .labelIcon {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .labelInfo {
-  font-weight: bold;
+    font-weight: bold;
 }
 .grid__container1 {
-  display: grid;
-  width: 100%;
-  grid-template-areas: "cover collection category" "cover title title" "cover authors authors" "cover pages language" "cover series volume" "cover status summary" "cover tags tags";
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 10px;
-  margin-top: 50px;
+    display: grid;
+    width: 100%;
+    grid-template-areas: "cover collection category" "cover title title" "cover authors authors" "cover pages language" "cover series volume" "cover status summary" "cover tags tags";
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px;
+    margin-top: 50px;
 }
 
 .grid__container2 {
-  display: grid;
-  grid-template-areas: "isbn10 description" "isbn13 description" "publisher description" "publishDate description";
-  grid-template-columns: 1fr 2fr;
-  width: 100%;
-  padding: 10px;
-  line-height: 24px;
+    display: grid;
+    grid-template-areas: "isbn10 description" "isbn13 description" "publisher description" "publishDate description";
+    grid-template-columns: 1fr 2fr;
+    width: 100%;
+    padding: 10px;
+    line-height: 24px;
 }
 
 .cover {
-  grid-area: cover;
-  width: auto;
-  height: 45vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 4px;
+    grid-area: cover;
+    width: auto;
+    height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
 }
 
 .cover img {
-  max-height: 100%;
-  max-width: 100%;
-  height: auto;
-  width: auto;
-  box-shadow: var(--boxShadow);
-  border-radius: 4px;
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    box-shadow: var(--boxShadow);
+    border-radius: 4px;
 }
 .tags {
-  grid-area: tags;
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  gap: 0 5px;
+    grid-area: tags;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 0 5px;
 }
 .tags li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  border-radius: 4px;
-  background-color: var(--colorRedOpacity);
-  border: solid 1px var(--colorRed);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: var(--colorRedOpacity);
+    border: solid 1px var(--colorRed);
 }
 .title {
-  grid-area: title;
+    grid-area: title;
 }
 .authors {
-  grid-area: authors;
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: center;
-  padding-bottom: 10px;
+    grid-area: authors;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 10px;
 }
 
 .pages {
-  grid-area: pages;
+    grid-area: pages;
 }
 
 .language {
-  grid-area: language;
+    grid-area: language;
 }
 .series {
-  grid-area: series;
+    grid-area: series;
 }
 .volume {
-  grid-area: volume;
+    grid-area: volume;
 }
 .status {
-  grid-area: status;
+    grid-area: status;
 }
 .summary {
-  grid-area: summary;
+    grid-area: summary;
 }
 
 .isbn10 {
-  grid-area: isbn10;
+    grid-area: isbn10;
 }
 .isbn13 {
-  grid-area: isbn13;
+    grid-area: isbn13;
 }
 
 .description .labelInfo {
-  width: 100%;
+    width: 100%;
 }
 .description {
-  grid-area: description;
-  line-height: 24px;
-  text-align: justify;
-  display: flex;
-  flex-direction: column;
+    grid-area: description;
+    line-height: 24px;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
 }
 .publishDate {
-  grid-area: publishDate;
+    grid-area: publishDate;
 }
 
 .seriesBooks {
-  width: 100%;
-  padding: 10px;
+    width: 100%;
+    padding: 10px;
 }
 
 @media (max-width: 768px) {
-  .details__container {
-    margin: auto;
-    width: 90%;
-    height: unset;
-  }
-  .grid__container1 {
-    grid-template-areas: "collection" "category" "title" "authors" "cover" "pages" "language" "series" "volume" "status" "summary" "tags";
-    grid-template-columns: 1fr;
-    line-height: 30px;
-  }
-  .grid__container2 {
-    grid-template-areas: "isbn10" "isbn13" "publisher" "publishDate" "description";
-    grid-template-columns: 1fr;
-    line-height: 30px;
-  }
-  .title {
-    overflow: hidden;
-  }
-  .authors {
-    flex-direction: column;
-    align-items: center;
-  }
+    .details__container {
+        margin: auto;
+        width: 90%;
+        height: unset;
+    }
+    .grid__container1 {
+        grid-template-areas: "collection category" "title" "authors" "cover" "pages" "language" "series" "volume" "status" "summary" "tags";
+        grid-template-columns: 1fr;
+        line-height: 30px;
+    }
+    .grid__container2 {
+        grid-template-areas: "isbn10" "isbn13" "publisher" "publishDate" "description";
+        grid-template-columns: 1fr;
+        line-height: 30px;
+    }
+    .title {
+        overflow: hidden;
+    }
+    .authors {
+        flex-direction: column;
+        align-items: center;
+    }
 }

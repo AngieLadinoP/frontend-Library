@@ -24,12 +24,14 @@ h2,
 h3 {
     text-align: center;
     padding: 10px;
-    overflow: hidden;
 }
 
 h1 {
     font-size: 40px;
     overflow: hidden;
+}
+h2 {
+    font-size: xx-large;
 }
 select {
     text-align: center;

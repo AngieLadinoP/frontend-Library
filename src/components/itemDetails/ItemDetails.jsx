@@ -6,7 +6,8 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { MdCollectionsBookmark } from "react-icons/md";
-export const ItemDetails = () => {
+import { CardCover } from "../visualization/cards/cardCover/CardCover";
+export const ItemDetails = ({ books }) => {
     const { idItem } = useParams();
     const [book, setBook] = useState({
         authorsId: [],
@@ -75,6 +76,9 @@ export const ItemDetails = () => {
         fetchBook(idItem);
     }, [idItem]);
 
+    const recomendations = books.filter(
+        (item) => item.seriesId.id !== book.seriesId.id
+    );
     return (
         <div>
             <div className={styles.options}>
@@ -112,7 +116,7 @@ export const ItemDetails = () => {
                     </div>
                     {/* Title */}
                     <div className={styles.title}>
-                        <h1 id="book_title">{title}</h1>
+                        <h2 id="book_title">{title}</h2>
                     </div>
 
                     {/* Authors */}
@@ -166,7 +170,7 @@ export const ItemDetails = () => {
                     </div>
                     {/*summary */}
                     <div>
-                        <span>Resumen: </span>
+                        <span className={styles.labelInfo}>Resumen: </span>
                         {summary ? (
                             <a href={summary} rel="noreferrer" target="_blank">
                                 Enlace al resumen
@@ -209,9 +213,9 @@ export const ItemDetails = () => {
                         <span className={styles.labelInfo}>
                             Fecha de publicación:
                         </span>
-                        {`${publishDay ? publishDay : publishDay} ${
-                            publishMonth ? months[publishMonth - 1] : null
-                        } ${publishYear}`}
+                        {`${publishMonth ? months[publishMonth - 1] : null} ${
+                            publishDay ? publishDay : publishDay
+                        }  ${publishYear}`}
                     </div>
                     {/*Description */}
                     <div className={styles.description}>
@@ -220,13 +224,12 @@ export const ItemDetails = () => {
                     </div>
                 </div>
 
-                {seriesBooks.filter((item) => item.id !== idItem).length !==
-                0 ? (
-                    <div className={styles.seriesBooks}>
-                        Otros libros de esta serie:
-                        {seriesBooks.length !== 0
-                            ? seriesBooks.map((item, index) => <p>{item}</p>)
-                            : null}
+                {recomendations.length !== 0 ? (
+                    <div>
+                        <h3>Otros libros de esta serie</h3>
+                        {recomendations.map((item, index) => (
+                            <CardCover book={item} />
+                        ))}
                     </div>
                 ) : null}
             </div>

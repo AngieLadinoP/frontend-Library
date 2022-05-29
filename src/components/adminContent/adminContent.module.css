@@ -1,0 +1,40 @@
+.adminContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.selection {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    column-gap: 10px;
+}
+.field__select div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+}
+.tableContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 90%;
+    margin-top: 20px;
+}
+.scrollTable {
+    overflow-x: scroll;
+    align-items: center;
+    margin: auto;
+    display: flex;
+    padding: 20px;
+}
+.scrollTable th {
+    width: max-content;
+}

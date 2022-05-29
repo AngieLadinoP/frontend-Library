@@ -8,6 +8,7 @@ import { Dashboard } from "./views/dashboard/Dashboard";
 import { useState, useEffect } from "react";
 import apiLibrary from "./api";
 import { EditItem } from "./views/editItem/EditItem";
+import { AdminContent } from "./components/adminContent/AdminContent";
 
 
 function App() {
@@ -90,7 +91,7 @@ function App() {
                 />
               }
             />
-            <Route path="/library/:idItem" element={<ItemDetails />} />
+            <Route path="/library/:idItem" element={<ItemDetails books={books}/>} />
             <Route
               path="/library/add-item"
               element={
@@ -127,9 +128,18 @@ function App() {
                 fetchPublishers={fetchPublishers}
                 fetchSeries={fetchSeries}/>}/>
             <Route
-              path="/library/dashboard"
+              path="/dashboard"
               element={
                 <Dashboard
+                books={books}
+                collections={collections}
+                />
+              }
+            />
+            <Route
+              path="/dashboard/admin-content"
+              element={
+                <AdminContent
                 authors={authors}
                 books={books}
                 categories={categories}

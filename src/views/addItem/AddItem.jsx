@@ -96,17 +96,9 @@ export const AddItem = ({
         setTempAuthors(tempAuthors.filter((item) => item.id !== id));
     };
 
-    const addAuthorBooks = async (idBook, listAuthors) => {
-        const number = listAuthors.length;
-        await apiLibrary.patch(`/api/authors/books/${idBook}`, {
-            listAuthors,
-            number,
-        });
-    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await apiLibrary.post("/api/books", book);
-        addAuthorBooks(res.data.id, res.data.authorsId);
         fetchBooks();
         setBook({
             collectionId: "",

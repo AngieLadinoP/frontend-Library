@@ -1,0 +1,128 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+    width: 100%;
+}
+.selection {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    column-gap: 10px;
+}
+
+.selection a {
+    text-decoration: none;
+    color: black;
+    background-color: var(--colorRedOpacity);
+    border: solid 1px var(--colorRed);
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 10px;
+}
+.field__select div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+}
+.iconView {
+    text-align: center;
+    border: 1px solid var(--colorGrey);
+    box-shadow: inset var(--colorBlackOpacityLigth);
+    border-radius: 4px;
+    background-color: var(--colorLightGrey);
+    width: 41px;
+    height: 41px;
+}
+
+.cards_container {
+    display: grid;
+    grid-template-areas: "total read read" "pages read read" "languages categories publishers";
+    width: 90%;
+}
+.cardDashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin: 10px;
+    border-radius: 4px;
+    padding: 10px;
+}
+.cardNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+    min-width: 100px;
+    padding: 0;
+    min-height: 80px;
+}
+
+.cardChart {
+    display: flex;
+    flex-direction: column;
+}
+.containerChart {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    justify-self: center;
+    align-self: center;
+    margin: auto;
+}
+
+.chart {
+    width: 240px;
+}
+.booksCount {
+    grid-area: total;
+}
+
+.readBooks {
+    grid-area: read;
+}
+
+.readPages {
+    grid-area: pages;
+}
+.languages {
+    grid-area: languages;
+}
+.categories {
+    grid-area: categories;
+}
+.publishers {
+    grid-area: publishers;
+}
+
+@media (max-width: 1024px) {
+    .cards_container {
+        grid-template-areas: "total categories" "pages categories" "read read" "languages publishers";
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+    .chart {
+        width: 220px;
+    }
+}
+@media (max-width: 500px) {
+    .cards_container {
+        grid-template-areas: "total" "pages" "read" "categories" "languages" "publishers";
+        grid-template-columns: 1fr;
+    }
+    .containerChart {
+        grid-template-columns: 1fr;
+    }
+}

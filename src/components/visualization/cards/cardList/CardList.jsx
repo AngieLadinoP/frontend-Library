@@ -9,7 +9,7 @@ export const CardList = ({ books }) => {
                 <tr>
                     <th id="book_title">Libro</th>
                     <th id="book_title">Autor</th>
-                    <th id="book_title">Detalles</th>
+                    <th id="book_title">Ver</th>
                 </tr>
             </thead>
             <tbody>

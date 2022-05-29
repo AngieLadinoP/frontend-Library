@@ -3,17 +3,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin: 20px auto;
     width: 100%;
+    gap: 10px;
 }
 .sortOptions {
     display: flex;
     width: 100%;
-}
-.visualization {
-    display: flex;
-    margin: auto;
-    width: 90%;
 }
 
 .field {
@@ -23,11 +19,42 @@
     margin: auto;
 }
 
+.iconView {
+    text-align: center;
+    border: 1px solid var(--colorGrey);
+    box-shadow: inset var(--colorBlackOpacityLigth);
+    border-radius: 4px;
+    background-color: var(--colorLightGrey);
+    width: 41px;
+    height: 41px;
+}
 .field__select div {
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    gap: 2px;
-    margin: 2px;
+}
+.field_search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.searchIcon {
+    font-size: 30px;
+    margin: 0 20px;
+}
+.iconView {
+    font-size: 50px;
+    color: var(--colorRed);
+}
+
+.visualization {
+    display: flex;
+    margin: auto;
+    width: 90%;
+}
+@media (max-width: 768px) {
+    .iconView {
+        font-size: 30px;
+    }
 }

@@ -18,7 +18,16 @@
     align-items: center;
     margin: auto;
 }
-
+.filter {
+    text-align: center;
+    border: 1px solid var(--colorGrey);
+    box-shadow: inset var(--colorBlackOpacityLigth);
+    border-radius: 4px;
+    background-color: var(--colorLightGrey);
+}
+.filterText {
+    padding: 0px 10px;
+}
 .iconView {
     text-align: center;
     border: 1px solid var(--colorGrey);

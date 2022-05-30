@@ -5,7 +5,7 @@ export const AuthorsTable = ({ authors, months }) => {
     // recibir arreglo con encabezados
 
     return (
-        <table className={styles.table}>
+        <table className={`${styles.table} ${styles.authorsTable}`}>
             <thead>
                 <tr>
                     <th>Nombres</th>

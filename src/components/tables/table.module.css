@@ -9,10 +9,14 @@
     border-collapse: collapse;
     text-align: center;
     padding: 10px;
-    width: max-content;
 }
 .table th {
     background-color: var(--colorRedOpacity);
+}
+
+.authorsTable,
+.booksTable {
+    width: max-content;
 }
 
 @media (max-width: 450px) {

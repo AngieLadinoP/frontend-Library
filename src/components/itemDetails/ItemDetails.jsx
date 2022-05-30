@@ -14,7 +14,7 @@ export const ItemDetails = ({ books }) => {
         categoryId: {},
         publisherId: {},
         languageId: {},
-        seriesId: { seriesName: "", seriesBooks: [] },
+        seriesId: { seriesName: "" },
         collectionId: {},
         title: "",
         isbn10: "",
@@ -51,7 +51,7 @@ export const ItemDetails = ({ books }) => {
         cover,
         readingStatus,
     } = book;
-    const { seriesName, seriesBooks } = seriesId;
+    const { seriesName } = seriesId;
 
     const months = [
         "Enero",
@@ -70,15 +70,38 @@ export const ItemDetails = ({ books }) => {
     const fetchBook = async (idBook) => {
         const res = await apiLibrary.get(`/api/books/${idBook}`);
         setBook(res.data);
-        console.log(res.data);
     };
+
+    const seriesBooks = books
+        .filter(
+            (item) =>
+                item.seriesId.id === book.seriesId.id &&
+                item.id !== idItem &&
+                book.seriesId.name !== "N/A"
+        )
+        .sort((a, b) => b.volumeNumber - a.volumeNumber);
+
+    let booksByAuthors = [];
+    // For each book
+    for (let i = 0; i < books.length; i++) {
+        // For each author of the book
+        for (let j = 0; j < books[i].authorsId.length; j++) {
+            // For each author of the current book
+            for (let k = 0; k < book.authorsId.length; k++) {
+                if (
+                    books[i].authorsId[j].id === book.authorsId[k].id &&
+                    books[i].id !== idItem
+                ) {
+                    booksByAuthors.push(books[i]);
+                }
+            }
+        }
+    }
+
     useEffect(() => {
         fetchBook(idItem);
     }, [idItem]);
 
-    const recomendations = books.filter(
-        (item) => item.seriesId.id !== book.seriesId.id
-    );
     return (
         <div>
             <div className={styles.options}>
@@ -224,14 +247,26 @@ export const ItemDetails = ({ books }) => {
                     </div>
                 </div>
 
-                {recomendations.length !== 0 ? (
-                    <div>
-                        <h3>Otros libros de esta serie</h3>
-                        {recomendations.map((item, index) => (
-                            <CardCover book={item} />
-                        ))}
+                <div className={styles.recomendations}>
+                    <h3>
+                        {seriesBooks.length !== 0
+                            ? "Otros libros de la serie"
+                            : booksByAuthors.length !== 0
+                            ? "Otros libros del autor(es)"
+                            : "No hay recomendaciones"}
+                    </h3>
+                    <div className={styles.recomendationItems}>
+                        {seriesBooks.length !== 0
+                            ? seriesBooks.map((item, index) => (
+                                  <CardCover book={item} key={index} />
+                              ))
+                            : booksByAuthors.length !== 0
+                            ? booksByAuthors.map((item, index) => (
+                                  <CardCover book={item} key={index} />
+                              ))
+                            : null}
                     </div>
-                ) : null}
+                </div>
             </div>
         </div>
     );

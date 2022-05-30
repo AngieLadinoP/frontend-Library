@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsCardList } from "react-icons/bs";
+import { BsCardList, BsFilter } from "react-icons/bs";
 import { MdCalendarViewMonth } from "react-icons/md";
 import { VscPreview } from "react-icons/vsc";
 import { BiSearchAlt, BiCategory } from "react-icons/bi";
@@ -171,6 +171,11 @@ export const Library = ({
                             </select>
                         </div>
                     </label>
+                </div>
+                {/* Filter */}
+                <div className={`${styles.field} ${styles.filter}`}>
+                    <BsFilter className={styles.iconView} />
+                    <div className={styles.filterText}>Filtrar</div>
                 </div>
             </div>
             <div>

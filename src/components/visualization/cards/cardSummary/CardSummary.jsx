@@ -25,7 +25,11 @@ export const CardSummary = ({ book }) => {
             <div className={styles.info}>
                 <Link to={`/library/${id}`}>
                     <div className={styles.titles}>
-                        <h2 id="book_title">{title}</h2>
+                        <h2 id="book_title">
+                            {`${
+                                volumeNumber ? `${volumeNumber}.` : ""
+                            } ${title}`}
+                        </h2>
                         <ul className={styles.authors}>
                             {authorsId.length !== 0
                                 ? authorsId.map((item, index) => (

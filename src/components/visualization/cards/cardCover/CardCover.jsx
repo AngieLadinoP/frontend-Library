@@ -3,7 +3,7 @@ import styles from "./cardCover.module.css";
 import { Link } from "react-router-dom";
 
 export const CardCover = ({ book }) => {
-    const { id, cover, title, authorsId } = book;
+    const { id, cover, title, authorsId, volumeNumber } = book;
 
     return (
         <div className={styles.cardBook}>
@@ -14,7 +14,7 @@ export const CardCover = ({ book }) => {
 
                 <div>
                     <h4 className={styles.title} id="book_title">
-                        {title}
+                        {`${volumeNumber ? `${volumeNumber}.` : ""} ${title}`}
                     </h4>
                     <ul className={styles.authors}>
                         {authorsId.length !== 0

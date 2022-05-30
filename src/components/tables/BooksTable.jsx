@@ -3,10 +3,10 @@ import styles from "./table.module.css";
 
 export const BooksTable = ({ books, months }) => {
     return (
-        <table className={styles.table}>
+        <table className={`${styles.table} ${styles.booksTable}`}>
             <thead>
                 <tr>
-                    <th>Título libro</th>
+                    <th>Título</th>
                     <th>Autores</th>
                     <th>Pg</th>
                     <th>ISBN 10</th>

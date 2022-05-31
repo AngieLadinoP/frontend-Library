@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal } from "../../components/modal/Modal";
-import { useParams } from "react-router-dom";
-import styles from "./editItem.module.css";
+import styles from "./addBook.module.css";
+import { useNavigate } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { RiCloseCircleLine } from "react-icons/ri";
 import apiLibrary from "../../api";
-export const EditItem = ({
+export const AddBook = ({
     authors,
     fetchBooks,
     categories,
@@ -20,9 +20,7 @@ export const EditItem = ({
     fetchCategories,
     fetchSeries,
 }) => {
-    // Get item info
-    const { idItem } = useParams();
-
+    const navigate = useNavigate();
     // Add new book
     const [book, setBook] = useState({
         collectionId: "",
@@ -34,7 +32,9 @@ export const EditItem = ({
         description: "",
         pages: "",
         publisherId: "",
-        publishDate: "",
+        publishDay: "",
+        publishMonth: "",
+        publishYear: "",
         tags: [],
         seriesId: "",
         volumeNumber: "",
@@ -44,23 +44,19 @@ export const EditItem = ({
         readingStatus: false,
     });
     const {
-        // collectionId,
-        categoryId,
         title,
         authorsId,
         isbn10,
         isbn13,
         description,
         pages,
-        // publisherId,
-        publishDate,
+        publishDay,
+        publishMonth,
+        publishYear,
         tags,
-        // seriesId,
         volumeNumber,
         cover,
         summary,
-        // languageId,
-        // readingStatus,
     } = book;
 
     // Temporary values
@@ -74,43 +70,23 @@ export const EditItem = ({
     const [openSeries, setOpenSeries] = useState(false);
     const [openLanguage, setOpenLanguage] = useState(false);
 
-    const fetchBook = async (idBook) => {
-        const res = await apiLibrary.get(`/api/books/${idBook}`);
-        setBook(res.data);
-        // res.data.authorsId.map((item) =>
-        //     setTempAuthors([
-        //         ...tempAuthors,
-        //         { id: item.id, tempName: `${item.firstName} ${item.lastName}` },
-        //     ])
-        // );
-    };
-    useEffect(() => {
-        fetchBook(idItem);
-    }, [idItem]);
-
     const handleInputChange = (e) => {
-        if (e.target.value) {
-            if (e.target.name === "tags") {
-                const tagsValue = e.target.value.split(",");
-                setBook({ ...book, tags: tagsValue });
-            } else if (e.target.name === "authorsId") {
-                if (!book.authorsId.includes(e.target.value)) {
-                    setBook({
-                        ...book,
-                        authorsId: [...authorsId, e.target.value],
-                    });
-                    setTempAuthors([
-                        ...tempAuthors,
-                        {
-                            id: e.target.value,
-                            tempName:
-                                e.target.options[e.target.selectedIndex].text,
-                        },
-                    ]);
-                }
-            } else {
-                setBook({ ...book, [e.target.name]: e.target.value });
+        if (e.target.name === "tags") {
+            const tagsValue = e.target.value.split(",");
+            setBook({ ...book, tags: tagsValue });
+        } else if (e.target.name === "authorsId") {
+            if (!book.authorsId.includes(e.target.value)) {
+                setBook({ ...book, authorsId: [...authorsId, e.target.value] });
+                setTempAuthors([
+                    ...tempAuthors,
+                    {
+                        id: e.target.value,
+                        tempName: e.target.options[e.target.selectedIndex].text,
+                    },
+                ]);
             }
+        } else {
+            setBook({ ...book, [e.target.name]: e.target.value });
         }
     };
 
@@ -122,18 +98,9 @@ export const EditItem = ({
         setTempAuthors(tempAuthors.filter((item) => item.id !== id));
     };
 
-    const addAuthorBooks = async (idBook, listAuthors) => {
-        const number = listAuthors.length;
-        await apiLibrary.patch(`/api/authors/books/${idBook}`, {
-            listAuthors,
-            number,
-        });
-    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const res = await apiLibrary.post("/api/books", book);
-        addAuthorBooks(res.data.id, authorsId);
         fetchBooks();
         setBook({
             collectionId: "",
@@ -145,7 +112,9 @@ export const EditItem = ({
             description: "",
             pages: "",
             publisherId: "",
-            publishDate: "",
+            publishDay,
+            publishMonth,
+            publishYear,
             tags: [],
             seriesId: "",
             volumeNumber: "",
@@ -156,11 +125,12 @@ export const EditItem = ({
         });
         setTempAuthors([]);
         alert("Libro creado");
+        navigate("/", { replace: true });
     };
 
     return (
         <section className={styles.container}>
-            <h1>Añadir Ítem</h1>
+            <h1>Añadir Libro</h1>
             <form onSubmit={handleSubmit} className={styles.form}>
                 {/* Collection */}
                 <div className={`${styles.field} ${styles.field__select}`}>
@@ -188,7 +158,6 @@ export const EditItem = ({
                         />
                     </div>
                 </div>
-
                 {/* Category */}
                 <div className={`${styles.field} ${styles.field__select}`}>
                     <label htmlFor="category">Categoría</label>
@@ -197,7 +166,7 @@ export const EditItem = ({
                             arialabel="Category"
                             name="categoryId"
                             onChange={handleInputChange}
-                            defaultValue={categoryId.id}
+                            defaultValue=""
                             id="category"
                         >
                             <option value=""> Categoría </option>
@@ -215,7 +184,6 @@ export const EditItem = ({
                         />
                     </div>
                 </div>
-
                 {/* Title */}
                 <div className={styles.field}>
                     <label htmlFor="bookTitle">Título</label>
@@ -229,7 +197,6 @@ export const EditItem = ({
                         required
                     />
                 </div>
-
                 {/* Authors */}
                 <div className={`${styles.field} ${styles.field__select}`}>
                     <label htmlFor="author">Autor</label>
@@ -274,7 +241,6 @@ export const EditItem = ({
                         </div>
                     </div>
                 </div>
-
                 {/* ISBN 10 */}
                 <div className={styles.field}>
                     <label htmlFor="isbn10">ISBN 10</label>
@@ -292,7 +258,6 @@ export const EditItem = ({
                         <p className={styles.prevText}>Máximo 10 caracteres</p>
                     </div>
                 </div>
-
                 {/* ISBN 13 */}
                 <div className={styles.field}>
                     <label htmlFor="isbn13">ISBN 13</label>
@@ -309,7 +274,6 @@ export const EditItem = ({
                         <p className={styles.prevText}>Máximo 13 caracteres</p>
                     </div>
                 </div>
-
                 {/* Description */}
                 <div className={styles.field}>
                     <label htmlFor="description">Descripción</label>
@@ -322,7 +286,6 @@ export const EditItem = ({
                         placeholder="Descripción"
                     />
                 </div>
-
                 {/* Publisher */}
                 <div className={`${styles.field} ${styles.field__select}`}>
                     <label htmlFor="publisher">Editorial</label>
@@ -353,17 +316,49 @@ export const EditItem = ({
                         />
                     </div>
                 </div>
-
-                {/* Publish date */}
+                {/* Publish date*/}
                 <div className={styles.field}>
-                    <label htmlFor="publishDate">Fecha de publicación</label>
-                    <input
-                        name="publishDate"
-                        value={publishDate}
-                        type="date"
-                        onChange={handleInputChange}
-                        id="publishdate"
-                    />
+                    <label>Fecha de publicación</label>
+                    <div id="date">
+                        <div>
+                            <label htmlFor="publishDay">Día</label>
+                            <input
+                                name="publishDay"
+                                value={publishDay}
+                                type="number"
+                                max={31}
+                                onChange={handleInputChange}
+                                id="publishDay"
+                                placeholder="DD"
+                                list="days"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="publishMonth">Mes</label>
+                            <input
+                                name="publishMonth"
+                                value={publishMonth}
+                                type="number"
+                                onChange={handleInputChange}
+                                id="publishMonth"
+                                max={12}
+                                placeholder="MM"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="publishYear">Año</label>
+                            <input
+                                name="publishYear"
+                                value={publishYear}
+                                type="number"
+                                onChange={handleInputChange}
+                                id="publishYear"
+                                placeholder="YYYY"
+                                max={2100}
+                                required
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 {/* Tags */}
@@ -383,7 +378,6 @@ export const EditItem = ({
                         </p>
                     </div>
                 </div>
-
                 {/* Series */}
                 <div className={`${styles.field} ${styles.field__select}`}>
                     <label htmlFor="series">Serie</label>
@@ -410,7 +404,6 @@ export const EditItem = ({
                         />
                     </div>
                 </div>
-
                 {/* Series volume */}
                 <div className={styles.field}>
                     <label htmlFor="volumeNumber">Volumen de a serie</label>
@@ -424,7 +417,6 @@ export const EditItem = ({
                         placeholder="Volumen en la serie"
                     />
                 </div>
-
                 {/* Cover */}
                 <div className={styles.field}>
                     <label htmlFor="coverImage">Portada</label>
@@ -440,7 +432,6 @@ export const EditItem = ({
                         <p className={styles.prevText}>Enlace de la imagen</p>
                     </div>
                 </div>
-
                 {/* Summary*/}
                 <div className={styles.field}>
                     <label htmlFor="summaryLink">Resumen</label>
@@ -457,7 +448,6 @@ export const EditItem = ({
                         <p className={styles.prevText}>Enlace del resumen</p>
                     </div>
                 </div>
-
                 {/* Language */}
                 <div className={`${styles.field} ${styles.field__select}`}>
                     <label htmlFor="language">Idioma</label>
@@ -484,7 +474,6 @@ export const EditItem = ({
                         />
                     </div>
                 </div>
-
                 {/* Pages */}
                 <div className={styles.field}>
                     <label htmlFor="numberPages">Páginas</label>
@@ -498,7 +487,6 @@ export const EditItem = ({
                         placeholder="Número de páginas"
                     />
                 </div>
-
                 {/* Reading status */}
                 <div className={styles.field}>
                     <label htmlFor="readingStatus">Leído</label>
@@ -515,7 +503,6 @@ export const EditItem = ({
                         </select>
                     </div>
                 </div>
-
                 <div className={styles.submitButton}>
                     <button type="submit">Enviar</button>
                 </div>

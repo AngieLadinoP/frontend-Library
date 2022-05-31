@@ -1,11 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./table.module.css";
 
 export const BooksTable = ({ books, months }) => {
     return (
-        <table className={`${styles.table} ${styles.booksTable}`}>
+        <table className={`${styles.table} `}>
             <thead>
                 <tr>
+                    <th>Editar</th>
                     <th>Título</th>
                     <th>Autores</th>
                     <th>Pg</th>
@@ -19,11 +21,16 @@ export const BooksTable = ({ books, months }) => {
                     <th>Idioma</th>
                     <th>Enlace al resumen</th>
                     <th>Leído</th>
+                    <th>Categoría</th>
+                    <th>Colección</th>
                 </tr>
             </thead>
             <tbody>
                 {books.map((item, index) => (
                     <tr key={index}>
+                        <td className={styles.edit}>
+                            <Link to={`/library/edit/${item.id}`}>Editar</Link>
+                        </td>
                         <td>{item.title}</td>
                         <td>
                             {item.authorsId.map((item, index) => (
@@ -50,17 +57,19 @@ export const BooksTable = ({ books, months }) => {
                         <td>
                             {item.publisherId.divisionName
                                 ? item.publisherId.divisionName
-                                : "N/A"}
+                                : "No aplica"}
                         </td>
                         <td>{item.seriesId.seriesName}</td>
                         <td>
-                            {item.seriesId.seriesName === "N/A"
-                                ? "N/A"
+                            {item.seriesId.seriesName === "No aplica"
+                                ? "No aplica"
                                 : item.volumeNumber}
                         </td>
                         <td>{item.languageId.languageName}</td>
                         <td>{item.summary}</td>
                         <td>{item.readingStatus ? "Sí" : "No"}</td>
+                        <td>{item.categoryId.categoryName}</td>
+                        <td>{item.collectionId.collectionName}</td>
                     </tr>
                 ))}
             </tbody>

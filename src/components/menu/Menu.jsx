@@ -23,7 +23,7 @@ export const Menu = () => {
         {
             icon: <RiAddCircleLine className={styles.icon} />,
             text: "Añadir ítem",
-            path: "/library/add-item",
+            path: "/library/add",
         },
         {
             icon: <BsFileEarmarkBarGraph className={styles.icon} />,
@@ -51,12 +51,14 @@ export const Menu = () => {
         {
             icon: <RiAddCircleLine className={styles.icon} />,
             text: "Añadir ítem",
-            path: "/library/add-item",
+            path: "/library/add",
         },
         {
             icon: <VscLibrary className={styles.icon} />,
             text: "Librería",
             path: "/",
+            path2: "/library/:id",
+            path3: "/library/edit/:id",
         },
         {
             icon: <BsFileEarmarkBarGraph className={styles.icon} />,

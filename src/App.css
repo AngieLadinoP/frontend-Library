@@ -12,6 +12,8 @@
     --colorGrey: #eaecef;
     --colorLightGrey: #fefefe;
     --colorDarkGrey: #aaaaaa;
+    --colorGreen: RGB(28, 196, 61);
+    --colorGreenOpacity: RGB(28, 196, 61, 0.2);
     --colorBlack: #000000;
     --colorBlackOpacityLigth: RGB(0, 0, 0, 0.1);
     --colorBlackOpacityDark: RGB(0, 0, 0, 0.8);
@@ -99,6 +101,4 @@ button[type="submit"] {
 }
 #book_author {
     font-family: "Indie Flower", cursive;
-    font-size: x-large;
-    padding: 5px;
 }

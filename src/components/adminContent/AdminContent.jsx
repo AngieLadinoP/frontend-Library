@@ -8,6 +8,20 @@ import { PublishersTable } from "../tables/PublishersTable";
 import { SeriesTable } from "../tables/SeriesTable";
 import { LanguagesTable } from "../tables/LanguagesTable";
 import styles from "./adminContent.module.css";
+import { FiDownload } from "react-icons/fi";
+import {
+    content,
+    headersAuthors,
+    headersBooks,
+    headersCategories,
+    headersCollections,
+    headersPublishers,
+    headersSeries,
+    headersLanguages,
+} from "./csvData";
+import { MdCalendarViewMonth } from "react-icons/md";
+import { VscPreview } from "react-icons/vsc";
+
 export const AdminContent = ({
     authors,
     books,
@@ -23,31 +37,10 @@ export const AdminContent = ({
     fetchLanguages,
     fetchCategories,
     fetchSeries,
+    months,
 }) => {
-    const months = [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre",
-    ];
-
-    const content = [
-        "Autores",
-        "Libros",
-        "Categorías",
-        "Colecciones",
-        "Editoriales",
-        "Series",
-        "Idiomas",
-    ];
+    const orderOptions = ["title", "authors", "publishDate"];
+    const [orderOption, setOrderOption] = useState("title");
     const [option, setOption] = useState("Libros");
     let csvData =
         option === "Autores"
@@ -66,31 +59,34 @@ export const AdminContent = ({
             ? languages
             : books;
 
-    //     const csvData = [
-    //         ["firstname", "lastname", "email"],
-    //         ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    //         ["Raed", "Labes", "rl@smthing.co.com"],
-    //         ["Yezzi", "Min l3b", "ymin@cocococo.com"],
-    //     ];
-    //     // Array of literal objects. Each item is rendered as CSV line however the order of fields will be defined by the headers props. If the headers props are not defined, the component will generate headers from each data item.
-    // headers = [
-    //     { label: "First Name", key: "firstname" },
-    //     { label: "Last Name", key: "lastname" },
-    //     { label: "Email", key: "email" }
-    //   ];
-
-    //   data = [
-    //     { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-    //     { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-    //     { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
-    //   ];
+    let csvHeaders =
+        option === "Autores"
+            ? headersAuthors
+            : option === "Libros"
+            ? headersBooks
+            : option === "Categorías"
+            ? headersCategories
+            : option === "Colecciones"
+            ? headersCollections
+            : option === "Editoriales"
+            ? headersPublishers
+            : option === "Series"
+            ? headersSeries
+            : option === "Idiomas"
+            ? headersLanguages
+            : headersBooks;
 
     const handleInputChange = (e) => {
-        setOption(e.target.value);
+        if (e.target.name === "orderOption") {
+            setOrderOption(e.target.value);
+        } else if (e.target.name === "option") {
+            setOption(e.target.value);
+        }
     };
+
     return (
         <div className={styles.adminContent}>
-            <h2>Administrar contenido</h2>
+            <h1>Administrar contenido</h1>
             {/*Select collection*/}
             <div className={styles.selection}>
                 <div className={styles.field__select}>
@@ -110,13 +106,41 @@ export const AdminContent = ({
                             : null}
                     </select>
                 </div>
-                <div>
-                    <CSVLink data={csvData} filename={`${option}.csv`}>
-                        Descargar {option} en csv
-                    </CSVLink>
+                <CSVLink
+                    data={csvData}
+                    headers={csvHeaders}
+                    filename={`${option}.csv`}
+                    className={styles.download}
+                >
+                    <FiDownload className={styles.downloadIcon} />
+                    Descargar {option} en csv
+                </CSVLink>
+            </div>
+            {/* Select order */}
+            <div className={styles.selection}>
+                <div
+                    className={`${styles.field__select} ${styles.select_order}`}
+                >
+                    <select
+                        aria-label="Order"
+                        name="orderOption"
+                        id="order"
+                        onChange={handleInputChange}
+                        defaultValue="title"
+                    >
+                        {orderOptions.length !== 0
+                            ? orderOptions.map((item, index) => (
+                                  <option value={item} key={index}>
+                                      {item}
+                                  </option>
+                              ))
+                            : null}
+                    </select>
+                    <div>
+                        <FiDownload className={styles.downloadIcon} />
+                    </div>
                 </div>
             </div>
-
             <div className={styles.tableContainer}>
                 {option === "Autores" ? (
                     <div className={`${styles.table} ${styles.scrollTable}`}>
@@ -139,6 +163,7 @@ export const AdminContent = ({
                         <CategoriesTable
                             categories={categories}
                             fetchCategories={fetchCategories}
+                            books={books}
                         />
                     </div>
                 ) : option === "Colecciones" ? (

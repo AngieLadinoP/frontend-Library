@@ -83,6 +83,7 @@ export const Dashboard = ({ books, collections }) => {
 
     return (
         <div className={styles.dashboard}>
+            <h1>Dashboard</h1>
             {/*Select collection*/}
             <div className={styles.selection}>
                 <div className={styles.field__select}>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Modal } from "../../components/modal/Modal";
-import styles from "./addItem.module.css";
+import React, { useState, useEffect } from "react";
+import { Modal } from "../../../modal/Modal";
+import { useParams, useNavigate } from "react-router-dom";
+import styles from "./editBook.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { RiCloseCircleLine } from "react-icons/ri";
-import apiLibrary from "../../api";
-export const AddItem = ({
+import apiLibrary from "../../../../api";
+export const EditBook = ({
     authors,
     fetchBooks,
     categories,
@@ -19,6 +20,9 @@ export const AddItem = ({
     fetchCategories,
     fetchSeries,
 }) => {
+    // Get item info
+    const { idItem } = useParams();
+    const navigate = useNavigate();
     // Add new book
     const [book, setBook] = useState({
         collectionId: "",
@@ -39,22 +43,28 @@ export const AddItem = ({
         cover: "",
         summary: "",
         languageId: "",
-        readingStatus: false,
+        readingStatus: "",
     });
     const {
+        collectionId,
+        categoryId,
         title,
         authorsId,
         isbn10,
         isbn13,
         description,
         pages,
+        publisherId,
         publishDay,
         publishMonth,
         publishYear,
         tags,
+        seriesId,
         volumeNumber,
         cover,
         summary,
+        languageId,
+        readingStatus,
     } = book;
 
     // Temporary values
@@ -68,23 +78,63 @@ export const AddItem = ({
     const [openSeries, setOpenSeries] = useState(false);
     const [openLanguage, setOpenLanguage] = useState(false);
 
+    const fetchBook = async (idBook) => {
+        const res = await apiLibrary.get(`/api/books/${idBook}`);
+        setBook({
+            collectionId: res.data.collectionId.id,
+            categoryId: res.data.categoryId.id,
+            title: res.data.title,
+            authorsId: res.data.authorsId.map((item) => item.id),
+            isbn10: res.data.isbn10,
+            isbn13: res.data.isbn13,
+            description: res.data.description,
+            pages: res.data.pages,
+            publisherId: res.data.publisherId.id,
+            publishDay: res.data.publishDay,
+            publishMonth: res.data.publishMonth,
+            publishYear: res.data.publishYear,
+            tags: res.data.tags,
+            seriesId: res.data.seriesId.id,
+            volumeNumber: res.data.volumeNumber,
+            cover: res.data.cover,
+            summary: res.data.summary,
+            languageId: res.data.languageId.id,
+            readingStatus: res.data.readingStatus,
+        });
+        res.data.authorsId.map((item) =>
+            setTempAuthors([
+                { id: item.id, tempName: `${item.firstName} ${item.lastName}` },
+            ])
+        );
+    };
+
+    useEffect(() => {
+        fetchBook(idItem);
+    }, [idItem]);
+
     const handleInputChange = (e) => {
-        if (e.target.name === "tags") {
-            const tagsValue = e.target.value.split(",");
-            setBook({ ...book, tags: tagsValue });
-        } else if (e.target.name === "authorsId") {
-            if (!book.authorsId.includes(e.target.value)) {
-                setBook({ ...book, authorsId: [...authorsId, e.target.value] });
-                setTempAuthors([
-                    ...tempAuthors,
-                    {
-                        id: e.target.value,
-                        tempName: e.target.options[e.target.selectedIndex].text,
-                    },
-                ]);
+        if (e.target.value) {
+            if (e.target.name === "tags") {
+                const tagsValue = e.target.value.split(",");
+                setBook({ ...book, tags: tagsValue });
+            } else if (e.target.name === "authorsId") {
+                if (!book.authorsId.includes(e.target.value)) {
+                    setBook({
+                        ...book,
+                        authorsId: [...authorsId, e.target.value],
+                    });
+                    setTempAuthors([
+                        ...tempAuthors,
+                        {
+                            id: e.target.value,
+                            tempName:
+                                e.target.options[e.target.selectedIndex].text,
+                        },
+                    ]);
+                }
+            } else {
+                setBook({ ...book, [e.target.name]: e.target.value });
             }
-        } else {
-            setBook({ ...book, [e.target.name]: e.target.value });
         }
     };
 
@@ -98,36 +148,36 @@ export const AddItem = ({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await apiLibrary.post("/api/books", book);
-        fetchBooks();
-        setBook({
-            collectionId: "",
-            categoryId: "",
-            title: "",
-            authorsId: [],
-            isbn10: "",
-            isbn13: "",
-            description: "",
-            pages: "",
-            publisherId: "",
+        await apiLibrary.put(`/api/books/${idItem}`, {
+            collectionId,
+            categoryId,
+            title,
+            authorsId,
+            isbn10,
+            isbn13,
+            description,
+            pages,
+            publisherId,
             publishDay,
             publishMonth,
             publishYear,
-            tags: [],
-            seriesId: "",
-            volumeNumber: "",
-            cover: "",
-            summary: "",
-            languageId: "",
-            readingStatus: false,
+            tags,
+            seriesId,
+            volumeNumber,
+            cover,
+            summary,
+            languageId,
+            readingStatus,
         });
+        fetchBooks();
         setTempAuthors([]);
-        alert("Libro creado");
+        alert("Libro actualizado");
+        navigate(`/library/${idItem}`, { replace: true });
     };
 
     return (
         <section className={styles.container}>
-            <h1>Añadir Ítem</h1>
+            <h1>Editar libro</h1>
             <form onSubmit={handleSubmit} className={styles.form}>
                 {/* Collection */}
                 <div className={`${styles.field} ${styles.field__select}`}>
@@ -154,6 +204,13 @@ export const AddItem = ({
                             className={styles.addIcon}
                         />
                     </div>
+                    <div className={styles.prevText}>
+                        {collections.map((item) =>
+                            item.id === book.collectionId
+                                ? `Colección actual: ${item.collectionName}`
+                                : ""
+                        )}
+                    </div>
                 </div>
                 {/* Category */}
                 <div className={`${styles.field} ${styles.field__select}`}>
@@ -179,6 +236,13 @@ export const AddItem = ({
                             className={styles.addIcon}
                             onClick={() => setOpenCategory(!openCategory)}
                         />
+                    </div>
+                    <div className={styles.prevText}>
+                        {categories.map((item) =>
+                            item.id === book.categoryId
+                                ? `Categoría actual: ${item.categoryName}`
+                                : ""
+                        )}
                     </div>
                 </div>
                 {/* Title */}
@@ -312,6 +376,13 @@ export const AddItem = ({
                             onClick={() => setOpenPublisher(!openPublisher)}
                         />
                     </div>
+                    <div className={styles.prevText}>
+                        {publishers.map((item) =>
+                            item.id === book.publisherId
+                                ? `Editorial actual: ${item.publisherName} ${item.divisionName}`
+                                : ""
+                        )}
+                    </div>
                 </div>
                 {/* Publish date*/}
                 <div className={styles.field}>
@@ -400,6 +471,13 @@ export const AddItem = ({
                             onClick={() => setOpenSeries(!openSeries)}
                         />
                     </div>
+                    <div className={styles.prevText}>
+                        {series.map((item) =>
+                            item.id === book.seriesId
+                                ? `Serie actual: ${item.seriesName}`
+                                : ""
+                        )}
+                    </div>
                 </div>
                 {/* Series volume */}
                 <div className={styles.field}>
@@ -470,6 +548,13 @@ export const AddItem = ({
                             onClick={() => setOpenLanguage(!openLanguage)}
                         />
                     </div>
+                    <div className={styles.prevText}>
+                        {languages.map((item) =>
+                            item.id === book.languageId
+                                ? `Idioma actual: ${item.languageName} `
+                                : ""
+                        )}
+                    </div>
                 </div>
                 {/* Pages */}
                 <div className={styles.field}>
@@ -499,6 +584,9 @@ export const AddItem = ({
                             <option value="false">No</option>
                         </select>
                     </div>
+                    <div className={styles.prevText}>{`Estado actual: ${
+                        readingStatus === "true" ? "Leído" : "Sin leer"
+                    }`}</div>
                 </div>
                 <div className={styles.submitButton}>
                     <button type="submit">Enviar</button>

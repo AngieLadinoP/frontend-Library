@@ -3,11 +3,11 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Library } from "./views/library/Library";
 import { Layout } from "./views/layout/Layout";
 import { ItemDetails } from "./components/itemDetails/ItemDetails";
-import { AddItem } from "./views/addItem/AddItem";
+import { AddBook } from "./views/addBook/AddBook";
 import { Dashboard } from "./views/dashboard/Dashboard";
 import { useState, useEffect } from "react";
 import apiLibrary from "./api";
-import { EditItem } from "./views/editItem/EditItem";
+import { EditBook} from "./components/editItems/components/editBook/EditBook"
 import { AdminContent } from "./components/adminContent/AdminContent";
 
 
@@ -71,7 +71,20 @@ function App() {
     fetchPublishers();
     fetchSeries();
   }, []);
-
+  const months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+];
   return (
     <div className="App">
       <HashRouter>
@@ -91,11 +104,11 @@ function App() {
                 />
               }
             />
-            <Route path="/library/:idItem" element={<ItemDetails books={books}/>} />
+            <Route path="/library/:idItem" element={<ItemDetails books={books} months={months} fetchBooks={fetchBooks}/>} />
             <Route
-              path="/library/add-item"
+              path="/library/add"
               element={
-                <AddItem
+                <AddBook
                   authors={authors}
                   books={books}
                   categories={categories}
@@ -113,7 +126,7 @@ function App() {
                 />
               }
             />
-            <Route path="/library/edit-item/:idItem" element={<EditItem authors={authors}
+            <Route path="/library/edit/:idItem" element={<EditBook authors={authors}
                 books={books}
                 categories={categories}
                 collections={collections}
@@ -154,6 +167,7 @@ function App() {
                 fetchLanguages={fetchLanguages}
                 fetchPublishers={fetchPublishers}
                 fetchSeries={fetchSeries}
+                months={months}
                 />
               }
             />

@@ -1,23 +1,26 @@
 .table {
-    width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
 }
+
 .table,
 .table th,
 .table td {
     border: 1px solid;
     border-collapse: collapse;
     text-align: center;
-    padding: 10px;
 }
 .table th {
     background-color: var(--colorRedOpacity);
+    padding: 10px;
 }
 
-.authorsTable,
-.booksTable {
-    width: max-content;
+.edit {
+    text-decoration: underline;
+    cursor: pointer;
 }
-
+.edit p {
+    color: blue;
+    text-decoration: underline blue;
+}
 @media (max-width: 450px) {
 }

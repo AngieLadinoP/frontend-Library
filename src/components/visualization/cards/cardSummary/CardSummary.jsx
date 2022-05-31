@@ -10,9 +10,9 @@ export const CardSummary = ({ book }) => {
         authorsId,
         pages,
         languageId,
+        seriesId,
         volumeNumber,
         readingStatus,
-        seriesId,
         description,
     } = book;
     const { seriesName } = seriesId;
@@ -56,12 +56,12 @@ export const CardSummary = ({ book }) => {
                             {languageId.languageName}
                         </div>
 
-                        {seriesName ? (
+                        {seriesName !== "N/A" ? (
                             <>
                                 {/*Series */}
                                 <div className={styles.series}>
                                     <span className={styles.labelInfo}>
-                                        Serie:{" "}
+                                        Serie:
                                     </span>
                                     {seriesName}
                                 </div>

@@ -1,3 +1,24 @@
+.line {
+    position: relative;
+    z-index: 1;
+}
+.line:before {
+    border-top: 2px solid #000000;
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    z-index: -1;
+}
+.line span {
+    background: #fff;
+    padding: 0 15px;
+}
+
 .details__container {
     display: flex;
     flex-direction: column;
@@ -16,6 +37,7 @@
     position: fixed;
     background-color: var(--colorWhite);
     height: 50px;
+    z-index: 2;
 }
 .labelIcon {
     display: flex;
@@ -73,6 +95,7 @@
     justify-content: flex-start;
     width: 100%;
     gap: 0 5px;
+    flex-wrap: wrap;
 }
 .tags li {
     display: flex;
@@ -140,6 +163,7 @@
     width: 100%;
     padding: 10px;
 }
+
 .recomendationItems {
     display: flex;
     flex-wrap: wrap;
@@ -151,9 +175,10 @@
         height: unset;
     }
     .grid__container1 {
-        grid-template-areas: "collection category" "title" "authors" "cover" "pages" "language" "series" "volume" "status" "summary" "tags";
-        grid-template-columns: 1fr;
+        grid-template-areas: "collection category" "title title" "authors authors" "cover cover" "pages pages" "language language" "series series" "volume volume" "status status" "summary summary" "tags tags";
+        grid-template-columns: 1fr 1fr;
         line-height: 30px;
+        grid-template-columns: 2fr;
     }
     .grid__container2 {
         grid-template-areas: "isbn10" "isbn13" "publisher" "publishDate" "description";
@@ -167,6 +192,4 @@
         flex-direction: column;
         align-items: center;
     }
-}
-@media (max-width: 768px) {
 }

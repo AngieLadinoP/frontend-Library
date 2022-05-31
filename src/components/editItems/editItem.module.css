@@ -1,0 +1,48 @@
+.modal {
+  position: fixed;
+  background-color: var(--colorBlackOpacityDark);
+  inset: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
+}
+.form {
+  background-color: var(--colorWhite);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin: auto;
+  border-radius: 4px;
+  gap: 10px;
+  height: 90%;
+}
+.form div {
+  padding: 20px;
+}
+
+.closeIcon {
+  font-size: 50px;
+  align-self: flex-end;
+  cursor: pointer;
+}
+.submitButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  overflow: hidden;
+}
+.submitButton button {
+  cursor: pointer;
+}
+#date {
+  color: red;
+}
+@media (max-width: 768px) {
+  .form {
+    width: 95%;
+  }
+}

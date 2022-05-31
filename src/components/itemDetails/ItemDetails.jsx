@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import apiLibrary from "../../api";
 import styles from "./itemDetails.module.css";
 import { FiEdit } from "react-icons/fi";
@@ -7,8 +7,9 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { MdCollectionsBookmark } from "react-icons/md";
 import { CardCover } from "../visualization/cards/cardCover/CardCover";
-export const ItemDetails = ({ books }) => {
+export const ItemDetails = ({ books, months, fetchBooks }) => {
     const { idItem } = useParams();
+    const navigate = useNavigate();
     const [book, setBook] = useState({
         authorsId: [],
         categoryId: {},
@@ -53,20 +54,6 @@ export const ItemDetails = ({ books }) => {
     } = book;
     const { seriesName } = seriesId;
 
-    const months = [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre",
-    ];
     const fetchBook = async (idBook) => {
         const res = await apiLibrary.get(`/api/books/${idBook}`);
         setBook(res.data);
@@ -77,7 +64,7 @@ export const ItemDetails = ({ books }) => {
             (item) =>
                 item.seriesId.id === book.seriesId.id &&
                 item.id !== idItem &&
-                book.seriesId.name !== "N/A"
+                book.seriesId.seriesName !== "No aplica"
         )
         .sort((a, b) => b.volumeNumber - a.volumeNumber);
 
@@ -98,6 +85,13 @@ export const ItemDetails = ({ books }) => {
         }
     }
 
+    const deleteBook = async (idBook) => {
+        await apiLibrary.delete(`/api/books/${idBook}`);
+        alert("Esta acción no es reversible,LIBRO ELIMINADO");
+        fetchBooks();
+        navigate("/", { replace: true });
+    };
+
     useEffect(() => {
         fetchBook(idItem);
     }, [idItem]);
@@ -106,13 +100,16 @@ export const ItemDetails = ({ books }) => {
         <div>
             <div className={styles.options}>
                 <Link
-                    to={`/library/edit-item/${idItem}`}
+                    to={`/library/edit/${idItem}`}
                     className={styles.labelIcon}
                 >
                     <FiEdit size={25} color="blue" />
                     <span> Editar</span>
                 </Link>
-                <p className={styles.labelIcon}>
+                <p
+                    className={styles.labelIcon}
+                    onClick={() => deleteBook(idItem)}
+                >
                     <RiDeleteBin5Line size={25} color="red" />
                     <span>Eliminar</span>
                 </p>
@@ -177,22 +174,24 @@ export const ItemDetails = ({ books }) => {
                             {/*volumeNumber */}
                             <div className={styles.volume}>
                                 <span className={styles.labelInfo}>
-                                    Volumen en la serie:{" "}
+                                    Volumen en la serie:
                                 </span>
-                                {volumeNumber}
+                                {seriesName === "No aplica"
+                                    ? "No aplica"
+                                    : volumeNumber}
                             </div>
                         </>
                     ) : null}
 
                     {/*reading Status */}
-                    <div>
+                    <div className={styles.status}>
                         <span className={styles.labelInfo}>
                             Estado de lectura:{" "}
                         </span>
                         {readingStatus ? "Leído" : "Sin leer"}
                     </div>
                     {/*summary */}
-                    <div>
+                    <div className={styles.summary}>
                         <span className={styles.labelInfo}>Resumen: </span>
                         {summary ? (
                             <a href={summary} rel="noreferrer" target="_blank">
@@ -246,26 +245,30 @@ export const ItemDetails = ({ books }) => {
                         {description}
                     </div>
                 </div>
-
-                <div className={styles.recomendations}>
-                    <h3>
+            </div>
+            {/* <hr className={styles.line} /> */}
+            <div className={styles.recomendations}>
+                <h2 className={styles.line}>
+                    <span>
                         {seriesBooks.length !== 0
                             ? "Otros libros de la serie"
                             : booksByAuthors.length !== 0
                             ? "Otros libros del autor(es)"
                             : "No hay recomendaciones"}
-                    </h3>
-                    <div className={styles.recomendationItems}>
-                        {seriesBooks.length !== 0
-                            ? seriesBooks.map((item, index) => (
+                    </span>
+                </h2>
+                <div className={styles.recomendationItems}>
+                    {seriesBooks.length !== 0
+                        ? seriesBooks.map((item, index) => (
+                              <CardCover book={item} key={index} />
+                          ))
+                        : booksByAuthors.length !== 0
+                        ? booksByAuthors
+                              .slice(0, 5)
+                              .map((item, index) => (
                                   <CardCover book={item} key={index} />
                               ))
-                            : booksByAuthors.length !== 0
-                            ? booksByAuthors.map((item, index) => (
-                                  <CardCover book={item} key={index} />
-                              ))
-                            : null}
-                    </div>
+                        : null}
                 </div>
             </div>
         </div>

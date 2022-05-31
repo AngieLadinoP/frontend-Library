@@ -100,7 +100,7 @@ export const AddBook = ({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await apiLibrary.post("/api/books", book);
+        await apiLibrary.post("/api/books", book);
         fetchBooks();
         setBook({
             collectionId: "",

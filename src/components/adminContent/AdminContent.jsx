@@ -19,8 +19,6 @@ import {
     headersSeries,
     headersLanguages,
 } from "./csvData";
-import { MdCalendarViewMonth } from "react-icons/md";
-import { VscPreview } from "react-icons/vsc";
 
 export const AdminContent = ({
     authors,
@@ -83,7 +81,7 @@ export const AdminContent = ({
             setOption(e.target.value);
         }
     };
-
+    console.log(orderOption);
     return (
         <div className={styles.adminContent}>
             <h1>Administrar contenido</h1>

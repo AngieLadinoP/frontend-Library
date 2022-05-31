@@ -34,6 +34,7 @@ export const Dashboard = ({ books, collections }) => {
             languagesChart.push(item.languageId.languageName);
             countLanguagesCharts.push(0);
         }
+        return item;
     });
     filteredBooks.map(
         (item) =>
@@ -50,6 +51,7 @@ export const Dashboard = ({ books, collections }) => {
             categoriesChart.push(item.categoryId.categoryName);
             countCategoryCharts.push(0);
         }
+        return item;
     });
     filteredBooks.map(
         (item) =>
@@ -66,6 +68,7 @@ export const Dashboard = ({ books, collections }) => {
             publishersChart.push(item.publisherId.publisherName);
             countPublisherCharts.push(0);
         }
+        return item;
     });
     filteredBooks.map(
         (item) =>

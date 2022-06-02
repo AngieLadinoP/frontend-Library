@@ -26,11 +26,7 @@ export const BarChart = ({ labels, label, values }) => {
 
     for (let i = 0; i < labels.length; i++) {
         const position = Math.floor(Math.random() * colors.length);
-        if (!chartColors.includes(colors[position])) {
-            chartColors.push(colors[position]);
-        } else {
-            i--;
-        }
+        chartColors.push(colors[position]);
     }
 
     const data = {

@@ -42,6 +42,7 @@ export const AddBook = ({
         summary: "",
         languageId: "",
         readingStatus: false,
+        numberL: "",
     });
     const {
         title,
@@ -57,6 +58,7 @@ export const AddBook = ({
         volumeNumber,
         cover,
         summary,
+        numberL,
     } = book;
 
     // Temporary values
@@ -75,7 +77,10 @@ export const AddBook = ({
             const tagsValue = e.target.value.split(",");
             setBook({ ...book, tags: tagsValue });
         } else if (e.target.name === "authorsId") {
-            if (!book.authorsId.includes(e.target.value)) {
+            if (
+                !book.authorsId.includes(e.target.value) &&
+                e.target.value !== ""
+            ) {
                 setBook({ ...book, authorsId: [...authorsId, e.target.value] });
                 setTempAuthors([
                     ...tempAuthors,
@@ -122,11 +127,31 @@ export const AddBook = ({
             summary: "",
             languageId: "",
             readingStatus: false,
+            numberL: "",
         });
         setTempAuthors([]);
         alert("Libro creado");
         navigate("/", { replace: true });
     };
+
+    function SortArray(x, y) {
+        if (x.categoryName < y.categoryName) {
+            return -1;
+        }
+        if (x.categoryName > y.categoryName) {
+            return 1;
+        }
+        return 0;
+    }
+    function SortArrayAuthors(x, y) {
+        if (x.firstName < y.firstName) {
+            return -1;
+        }
+        if (x.firstName > y.firstName) {
+            return 1;
+        }
+        return 0;
+    }
 
     return (
         <section className={styles.container}>
@@ -160,7 +185,7 @@ export const AddBook = ({
                 </div>
                 {/* Category */}
                 <div className={`${styles.field} ${styles.field__select}`}>
-                    <label htmlFor="category">Categoría</label>
+                    <label htmlFor="category">Género</label>
                     <div>
                         <select
                             arialabel="Category"
@@ -169,13 +194,15 @@ export const AddBook = ({
                             defaultValue=""
                             id="category"
                         >
-                            <option value=""> Categoría </option>
+                            <option value=""> Género </option>
                             {categories.length !== 0
-                                ? categories.map((item, index) => (
-                                      <option value={item.id} key={index}>
-                                          {item.categoryName}
-                                      </option>
-                                  ))
+                                ? categories
+                                      .sort(SortArray)
+                                      .map((item, index) => (
+                                          <option value={item.id} key={index}>
+                                              {item.categoryName}
+                                          </option>
+                                      ))
                                 : null}
                         </select>
                         <IoIosAddCircleOutline
@@ -211,11 +238,24 @@ export const AddBook = ({
                             >
                                 <option value="">Autor</option>
                                 {authors.length !== 0
-                                    ? authors.map((item, index) => (
-                                          <option value={item.id} key={index}>
-                                              {`${item.firstName} ${item.lastName}`}
-                                          </option>
-                                      ))
+                                    ? authors
+                                          .sort(SortArrayAuthors)
+                                          .map((item, index) => (
+                                              <option
+                                                  value={item.id}
+                                                  key={index}
+                                              >
+                                                  {`${
+                                                      item.firstName !== "NA"
+                                                          ? item.firstName
+                                                          : ""
+                                                  } ${
+                                                      item.lastName !== "NA"
+                                                          ? item.lastName
+                                                          : ""
+                                                  }`}
+                                              </option>
+                                          ))
                                     : null}
                             </select>
                             <IoIosAddCircleOutline
@@ -411,7 +451,6 @@ export const AddBook = ({
                         name="volumeNumber"
                         value={volumeNumber}
                         type="number"
-                        min="0"
                         onChange={handleInputChange}
                         id="volumeNumber"
                         placeholder="Volumen en la serie"
@@ -487,6 +526,7 @@ export const AddBook = ({
                         placeholder="Número de páginas"
                     />
                 </div>
+
                 {/* Reading status */}
                 <div className={styles.field}>
                     <label htmlFor="readingStatus">Leído</label>
@@ -503,6 +543,20 @@ export const AddBook = ({
                         </select>
                     </div>
                 </div>
+                {/* Library id */}
+                <div className={styles.field}>
+                    <label htmlFor="volumeNumber">Identificador</label>
+                    <input
+                        name="numberL"
+                        value={numberL}
+                        type="number"
+                        min="0"
+                        onChange={handleInputChange}
+                        id="numberL"
+                        placeholder="#"
+                    />
+                </div>
+
                 <div className={styles.submitButton}>
                     <button type="submit">Enviar</button>
                 </div>

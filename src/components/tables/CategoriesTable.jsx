@@ -17,7 +17,7 @@ export const CategoriesTable = ({ categories, fetchCategories }) => {
                     <tr>
                         <th>Editar</th>
                         <th>Identificador</th>
-                        <th>Categoría</th>
+                        <th>Género</th>
                     </tr>
                 </thead>
                 <tbody>

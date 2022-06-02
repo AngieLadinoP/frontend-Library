@@ -59,6 +59,7 @@
     align-items: center;
     grid-column: span 2;
 }
+
 @media (max-width: 768px) {
     .form label {
         align-self: flex-start;

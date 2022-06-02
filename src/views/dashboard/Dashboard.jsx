@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styles from "./dashboard.module.css";
 import { BiCategory } from "react-icons/bi";
-import { Chart } from "../../components/Chart";
+import { DoughnutChart } from "../../components/Chart";
 import { Link } from "react-router-dom";
+import { BarChart } from "../../components/BarChart";
 
 export const Dashboard = ({ books, collections }) => {
     const [collection, setCollection] = useState({
@@ -57,6 +58,25 @@ export const Dashboard = ({ books, collections }) => {
         (item) =>
             (countCategoryCharts[
                 categoriesChart.indexOf(item.categoryId.categoryName)
+            ] += 1)
+    );
+    //Series
+    const seriesChart = [];
+    let countSeriesCharts = [];
+    filteredBooks.map((item) => {
+        if (
+            !seriesChart.includes(item.seriesId.seriesName) &&
+            item.seriesId.seriesName !== "No aplica"
+        ) {
+            seriesChart.push(item.seriesId.seriesName);
+            countSeriesCharts.push(0);
+        }
+        return item;
+    });
+    filteredBooks.map(
+        (item) =>
+            (countSeriesCharts[
+                seriesChart.indexOf(item.seriesId.seriesName)
             ] += 1)
     );
 
@@ -132,7 +152,7 @@ export const Dashboard = ({ books, collections }) => {
                     <div className={styles.containerChart}>
                         <div className={styles.cardNumber}>{percentage}%</div>
                         <div className={styles.chart}>
-                            <Chart
+                            <DoughnutChart
                                 label="Leídos"
                                 labels={
                                     booksCount - readBooks.length === 0
@@ -174,7 +194,7 @@ export const Dashboard = ({ books, collections }) => {
                 >
                     <h3 className={styles.cardTitle}>Idiomas</h3>
                     <div className={styles.chart}>
-                        <Chart
+                        <DoughnutChart
                             label="Idiomas"
                             labels={languagesChart}
                             values={countLanguagesCharts}
@@ -184,23 +204,33 @@ export const Dashboard = ({ books, collections }) => {
 
                 {/* Categories */}
                 <div className={`${styles.categories} ${styles.cardDashboard}`}>
-                    <h3 className={styles.cardTitle}>Categorías</h3>
+                    <h3 className={styles.cardTitle}>Géneros</h3>
                     <div className={styles.chart}>
-                        <Chart
-                            label="Categorías"
+                        <BarChart
+                            label="Géneros"
                             labels={categoriesChart}
                             values={countCategoryCharts}
                         />
                     </div>
                 </div>
-
+                {/* Series */}
+                <div className={`${styles.series} ${styles.cardDashboard}`}>
+                    <h3 className={styles.cardTitle}>Series</h3>
+                    <div className={styles.chart}>
+                        <DoughnutChart
+                            label="Series"
+                            labels={seriesChart}
+                            values={countSeriesCharts}
+                        />
+                    </div>
+                </div>
                 {/* Publishers */}
                 <div
                     className={`${styles.publishers} ${styles.cardDashboard} `}
                 >
                     <h3 className={styles.cardTitle}>Editoriales</h3>
                     <div className={styles.chart}>
-                        <Chart
+                        <BarChart
                             label="Editoriales"
                             labels={publishersChart}
                             values={countPublisherCharts}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AuthorsTable } from "../tables/AuthorsTable";
+import { useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import { BooksTable } from "../tables/BooksTable";
 import { CategoriesTable } from "../tables/CategoriesTable";
@@ -19,6 +20,7 @@ import {
     headersSeries,
     headersLanguages,
 } from "./csvData";
+import { Modal } from "../modal/Modal";
 
 export const AdminContent = ({
     authors,
@@ -37,15 +39,14 @@ export const AdminContent = ({
     fetchSeries,
     months,
 }) => {
-    const orderOptions = ["title", "authors", "publishDate"];
-    const [orderOption, setOrderOption] = useState("title");
+    const navigate = useNavigate();
     const [option, setOption] = useState("Libros");
     let csvData =
         option === "Autores"
             ? authors
             : option === "Libros"
             ? books
-            : option === "Categorías"
+            : option === "Géneros"
             ? categories
             : option === "Colecciones"
             ? collections
@@ -62,7 +63,7 @@ export const AdminContent = ({
             ? headersAuthors
             : option === "Libros"
             ? headersBooks
-            : option === "Categorías"
+            : option === "Géneros"
             ? headersCategories
             : option === "Colecciones"
             ? headersCollections
@@ -75,13 +76,36 @@ export const AdminContent = ({
             : headersBooks;
 
     const handleInputChange = (e) => {
-        if (e.target.name === "orderOption") {
-            setOrderOption(e.target.value);
-        } else if (e.target.name === "option") {
+        if (e.target.name === "option") {
             setOption(e.target.value);
         }
     };
-    console.log(orderOption);
+    // Modals to add new information
+    const [openCollection, setOpenCollection] = useState(false);
+    const [openCategory, setOpenCategory] = useState(false);
+    const [openAuthor, setOpenAuthor] = useState(false);
+    const [openPublisher, setOpenPublisher] = useState(false);
+    const [openSeries, setOpenSeries] = useState(false);
+    const [openLanguage, setOpenLanguage] = useState(false);
+
+    const handleModal = () => {
+        if (option === "Autores") {
+            setOpenAuthor(!openAuthor);
+        } else if (option === "Géneros") {
+            setOpenCategory(!openCategory);
+        } else if (option === "Colecciones") {
+            setOpenCollection(!openCollection);
+        } else if (option === "Editoriales") {
+            setOpenPublisher(!openPublisher);
+        } else if (option === "Series") {
+            setOpenSeries(!openSeries);
+        } else if (option === "Idiomas") {
+            setOpenLanguage(!openLanguage);
+        } else if (option === "Libros") {
+            navigate("/library/add", { replace: true });
+        }
+    };
+    console.log(books);
     return (
         <div className={styles.adminContent}>
             <h1>Administrar contenido</h1>
@@ -113,32 +137,50 @@ export const AdminContent = ({
                     <FiDownload className={styles.downloadIcon} />
                     Descargar {option} en csv
                 </CSVLink>
+                <div className={styles.newItem} onClick={handleModal}>
+                    Nuevo
+                </div>
+                {/* Modals */}
+                {openCollection ? (
+                    <Modal
+                        type={"collection"}
+                        setModal={setOpenCollection}
+                        fetch={fetchCollections}
+                    />
+                ) : openAuthor ? (
+                    <Modal
+                        type={"author"}
+                        setModal={setOpenAuthor}
+                        fetch={fetchAuthors}
+                    />
+                ) : openPublisher ? (
+                    <Modal
+                        type={"publisher"}
+                        setModal={setOpenPublisher}
+                        fetch={fetchPublishers}
+                    />
+                ) : openSeries ? (
+                    <Modal
+                        type={"series"}
+                        setModal={setOpenSeries}
+                        fetch={fetchSeries}
+                    />
+                ) : openLanguage ? (
+                    <Modal
+                        type={"language"}
+                        setModal={setOpenLanguage}
+                        fetch={fetchLanguages}
+                    />
+                ) : openCategory ? (
+                    <Modal
+                        type={"category"}
+                        setModal={setOpenCategory}
+                        fetch={fetchCategories}
+                    />
+                ) : null}
             </div>
             {/* Select order */}
-            <div className={styles.selection}>
-                <div
-                    className={`${styles.field__select} ${styles.select_order}`}
-                >
-                    <select
-                        aria-label="Order"
-                        name="orderOption"
-                        id="order"
-                        onChange={handleInputChange}
-                        defaultValue="title"
-                    >
-                        {orderOptions.length !== 0
-                            ? orderOptions.map((item, index) => (
-                                  <option value={item} key={index}>
-                                      {item}
-                                  </option>
-                              ))
-                            : null}
-                    </select>
-                    <div>
-                        <FiDownload className={styles.downloadIcon} />
-                    </div>
-                </div>
-            </div>
+
             <div className={styles.tableContainer}>
                 {option === "Autores" ? (
                     <div className={`${styles.table} ${styles.scrollTable}`}>
@@ -156,7 +198,7 @@ export const AdminContent = ({
                             fetchBooks={fetchBooks}
                         />
                     </div>
-                ) : option === "Categorías" ? (
+                ) : option === "Géneros" ? (
                     <div className={styles.table}>
                         <CategoriesTable
                             categories={categories}

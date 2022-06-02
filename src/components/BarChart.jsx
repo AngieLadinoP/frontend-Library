@@ -1,9 +1,10 @@
 import React from "react";
 import { Chart, registerables } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+
 Chart.register(...registerables);
 
-export const DoughnutChart = ({ labels, label, values }) => {
+export const BarChart = ({ labels, label, values }) => {
     const opacity = 0.8;
 
     const colors = [
@@ -44,5 +45,5 @@ export const DoughnutChart = ({ labels, label, values }) => {
             },
         ],
     };
-    return <Doughnut data={data} />;
+    return <Bar data={data} />;
 };

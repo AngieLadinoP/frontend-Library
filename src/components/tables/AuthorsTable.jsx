@@ -30,18 +30,24 @@ export const AuthorsTable = ({ authors, months, fetchAuthors }) => {
                                     Editar
                                 </p>
                             </td>
-                            <td>{item.firstName}</td>
-                            <td>{item.lastName}</td>
+                            <td>
+                                {item.firstName !== "NA" ? item.firstName : ""}
+                            </td>
+                            <td>
+                                {item.lastName !== "NA" ? item.lastName : ""}
+                            </td>
                             <td>
                                 {`${
                                     item.birthMonth
                                         ? months[item.birthMonth - 1]
-                                        : null
-                                }  ${
-                                    item.birthDay
-                                        ? item.birthDay
-                                        : item.birthDay
-                                } ${item.birthYear ? item.birthYear : null}`}
+                                        : ""
+                                }  ${item.birthDay ? item.birthDay : ""} ${
+                                    item.birthYear
+                                        ? item.birthYear < 0
+                                            ? `${item.birthYear * -1} AC`
+                                            : item.birthYear
+                                        : ""
+                                }`}
                             </td>
                             <td>{item.birthPlaceCity}</td>
                             <td>{item.birthPlaceCountry}</td>

@@ -47,7 +47,7 @@
 
 .cards_container {
     display: grid;
-    grid-template-areas: "total read read" "pages read read" "languages categories publishers";
+    grid-template-areas: "total read read" "pages read read" "languages categories categories" "publishers publishers series";
     width: 90%;
 }
 .cardDashboard {
@@ -103,26 +103,36 @@
 .categories {
     grid-area: categories;
 }
+.series {
+    grid-area: series;
+}
 .publishers {
     grid-area: publishers;
+}
+.publishers .chart,
+.categories .chart {
+    width: auto;
+    max-height: 200px;
+    padding: 0;
 }
 
 @media (max-width: 1024px) {
     .cards_container {
-        grid-template-areas: "total categories" "pages categories" "read read" "languages publishers";
+        grid-template-areas: "total read" "pages read" "categories categories" "series languages" "publishers publishers";
         grid-template-columns: 1fr 1fr;
         width: 100%;
     }
     .chart {
         width: 220px;
     }
-}
-@media (max-width: 500px) {
-    .cards_container {
-        grid-template-areas: "total" "pages" "read" "categories" "languages" "publishers";
+    .containerChart {
         grid-template-columns: 1fr;
     }
-    .containerChart {
+}
+
+@media (max-width: 768px) {
+    .cards_container {
+        grid-template-areas: "total" "pages" "read" "categories" "languages" "series" "publishers";
         grid-template-columns: 1fr;
     }
 }

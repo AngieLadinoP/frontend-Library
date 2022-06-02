@@ -96,6 +96,15 @@ export const ItemDetails = ({ books, months, fetchBooks }) => {
         fetchBook(idItem);
     }, [idItem]);
 
+    const SortArray = (x, y) => {
+        if (x.volumeNumber < y.volumeNumber) {
+            return -1;
+        }
+        if (x.volumeNumber > y.volumeNumber) {
+            return 1;
+        }
+        return 0;
+    };
     return (
         <div>
             <div className={styles.options}>
@@ -143,10 +152,15 @@ export const ItemDetails = ({ books, months, fetchBooks }) => {
                     <div className={styles.authors}>
                         {authorsId.length !== 0
                             ? authorsId.map((item, index) => (
-                                  <h2
-                                      key={index}
-                                      id="book_author"
-                                  >{` ${item.firstName} ${item.lastName}`}</h2>
+                                  <h2 key={index} id="book_author">{` ${
+                                      item.firstName !== "NA"
+                                          ? item.firstName
+                                          : ""
+                                  } ${
+                                      item.lastName !== "NA"
+                                          ? item.lastName
+                                          : ""
+                                  }`}</h2>
                               ))
                             : null}
                     </div>
@@ -162,7 +176,7 @@ export const ItemDetails = ({ books, months, fetchBooks }) => {
                         {languageId.languageName}
                     </div>
 
-                    {seriesName ? (
+                    {seriesName !== "No aplica" ? (
                         <>
                             {/*Series */}
                             <div className={styles.series}>
@@ -186,7 +200,7 @@ export const ItemDetails = ({ books, months, fetchBooks }) => {
                     {/*reading Status */}
                     <div className={styles.status}>
                         <span className={styles.labelInfo}>
-                            Estado de lectura:{" "}
+                            Estado de lectura:
                         </span>
                         {readingStatus ? "Leído" : "Sin leer"}
                     </div>
@@ -259,9 +273,11 @@ export const ItemDetails = ({ books, months, fetchBooks }) => {
                 </h2>
                 <div className={styles.recomendationItems}>
                     {seriesBooks.length !== 0
-                        ? seriesBooks.map((item, index) => (
-                              <CardCover book={item} key={index} />
-                          ))
+                        ? seriesBooks
+                              .sort(SortArray)
+                              .map((item, index) => (
+                                  <CardCover book={item} key={index} />
+                              ))
                         : booksByAuthors.length !== 0
                         ? booksByAuthors
                               .slice(0, 5)

@@ -44,6 +44,7 @@ export const EditBook = ({
         summary: "",
         languageId: "",
         readingStatus: "",
+        numberL: "",
     });
     const {
         collectionId,
@@ -65,6 +66,7 @@ export const EditBook = ({
         summary,
         languageId,
         readingStatus,
+        numberL,
     } = book;
 
     // Temporary values
@@ -100,6 +102,7 @@ export const EditBook = ({
             summary: res.data.summary,
             languageId: res.data.languageId.id,
             readingStatus: res.data.readingStatus,
+            numberL: res.data.numberL,
         });
         res.data.authorsId.map((item) =>
             setTempAuthors([
@@ -168,6 +171,7 @@ export const EditBook = ({
             summary,
             languageId,
             readingStatus,
+            numberL,
         });
         fetchBooks();
         setTempAuthors([]);
@@ -214,7 +218,7 @@ export const EditBook = ({
                 </div>
                 {/* Category */}
                 <div className={`${styles.field} ${styles.field__select}`}>
-                    <label htmlFor="category">Categoría</label>
+                    <label htmlFor="category">Género</label>
                     <div>
                         <select
                             arialabel="Category"
@@ -223,7 +227,7 @@ export const EditBook = ({
                             defaultValue=""
                             id="category"
                         >
-                            <option value=""> Categoría </option>
+                            <option value=""> Género</option>
                             {categories.length !== 0
                                 ? categories.map((item, index) => (
                                       <option value={item.id} key={index}>
@@ -240,7 +244,7 @@ export const EditBook = ({
                     <div className={styles.prevText}>
                         {categories.map((item) =>
                             item.id === book.categoryId
-                                ? `Categoría actual: ${item.categoryName}`
+                                ? `Género actual: ${item.categoryName}`
                                 : ""
                         )}
                     </div>
@@ -274,7 +278,15 @@ export const EditBook = ({
                                 {authors.length !== 0
                                     ? authors.map((item, index) => (
                                           <option value={item.id} key={index}>
-                                              {`${item.firstName} ${item.lastName}`}
+                                              {`${
+                                                  item.firstName !== "NA"
+                                                      ? item.firstName
+                                                      : ""
+                                              } ${
+                                                  item.lastName !== "NA"
+                                                      ? item.lastName
+                                                      : ""
+                                              }`}
                                           </option>
                                       ))
                                     : null}
@@ -587,6 +599,19 @@ export const EditBook = ({
                     <div className={styles.prevText}>{`Estado actual: ${
                         readingStatus === "true" ? "Leído" : "Sin leer"
                     }`}</div>
+                </div>
+                {/* Library id */}
+                <div className={styles.field}>
+                    <label htmlFor="volumeNumber">Identificador</label>
+                    <input
+                        name="numberL"
+                        value={numberL}
+                        type="number"
+                        min="0"
+                        onChange={handleInputChange}
+                        id="numberL"
+                        placeholder="#"
+                    />
                 </div>
                 <div className={styles.submitButton}>
                     <button type="submit">Enviar</button>

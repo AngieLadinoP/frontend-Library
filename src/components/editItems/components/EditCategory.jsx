@@ -35,10 +35,10 @@ export const EditCategory = ({ idItem, setModal, fetch }) => {
                     className={styles.closeIcon}
                 />
 
-                <h2>Editar categoría</h2>
+                <h2>Editar género</h2>
                 {/*Category*/}
                 <div>
-                    <label htmlFor="category">Nombre categoría</label>
+                    <label htmlFor="category">Nombre género</label>
                     <input
                         name="categoryName"
                         value={categoryName}

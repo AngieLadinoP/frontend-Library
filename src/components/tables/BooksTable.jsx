@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import styles from "./table.module.css";
 
 export const BooksTable = ({ books, months }) => {
+    books.sort((a, b) => a.numberL - b.numberL);
+
     return (
         <table className={`${styles.table} `}>
             <thead>
                 <tr>
                     <th>Editar</th>
+                    <th>Número</th>
                     <th>Título</th>
                     <th>Autores</th>
                     <th>Pg</th>
@@ -21,7 +24,7 @@ export const BooksTable = ({ books, months }) => {
                     <th>Idioma</th>
                     <th>Enlace al resumen</th>
                     <th>Leído</th>
-                    <th>Categoría</th>
+                    <th>Género</th>
                     <th>Colección</th>
                 </tr>
             </thead>
@@ -31,11 +34,21 @@ export const BooksTable = ({ books, months }) => {
                         <td className={styles.edit}>
                             <Link to={`/library/edit/${item.id}`}>Editar</Link>
                         </td>
+                        <td>{item.numberL}</td>
                         <td>{item.title}</td>
                         <td>
                             {item.authorsId.map((item, index) => (
                                 <p key={index}>
-                                    {item.firstName} {item.lastName}
+                                    {`${
+                                        item.firstName !== "NA"
+                                            ? item.firstName
+                                            : ""
+                                    }
+                                    ${
+                                        item.lastName !== "NA"
+                                            ? item.lastName
+                                            : ""
+                                    }`}
                                 </p>
                             ))}
                         </td>
@@ -43,14 +56,10 @@ export const BooksTable = ({ books, months }) => {
                         <td>{item.isbn10}</td>
                         <td>{item.isbn13}</td>
                         <td>
-                            {`${
-                                item.publishDay
-                                    ? item.publishDay
-                                    : item.publishDay
-                            } ${
+                            {`${item.publishDay ? item.publishDay : ""} ${
                                 item.publishMonth
                                     ? months[item.publishMonth - 1]
-                                    : null
+                                    : ""
                             } ${item.publishYear}`}
                         </td>
                         <td>{item.publisherId.publisherName}</td>

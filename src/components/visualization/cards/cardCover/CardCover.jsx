@@ -23,7 +23,15 @@ export const CardCover = ({ book }) => {
                                       key={index}
                                       className={styles.author}
                                       id="book_author"
-                                  >{`${item.firstName} ${item.lastName}`}</li>
+                                  >{`${
+                                      item.firstName !== "NA"
+                                          ? item.firstName
+                                          : ""
+                                  } ${
+                                      item.lastName !== "NA"
+                                          ? item.lastName
+                                          : ""
+                                  }`}</li>
                               ))
                             : null}
                     </ul>

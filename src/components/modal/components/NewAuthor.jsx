@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from "./../modal.module.css";
 export const NewAuthor = ({ handleInputChange, newAuthor }) => {
     const {
         firstName,
@@ -14,6 +14,7 @@ export const NewAuthor = ({ handleInputChange, newAuthor }) => {
     return (
         <div>
             <h2>Nuevo autor</h2>
+            <p className={styles.prevText}>Si no aplica, escriba NA</p>
             {/* First Name */}
             <div>
                 <label htmlFor="firstName">Nombres</label>

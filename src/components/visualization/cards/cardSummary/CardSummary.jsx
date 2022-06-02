@@ -37,7 +37,15 @@ export const CardSummary = ({ book }) => {
                                           id="book_author"
                                           key={index}
                                           className={styles.author}
-                                      >{`${item.firstName} ${item.lastName}`}</li>
+                                      >{`${
+                                          item.firstName !== "NA"
+                                              ? item.firstName
+                                              : ""
+                                      } ${
+                                          item.lastName !== "NA"
+                                              ? item.lastName
+                                              : ""
+                                      }`}</li>
                                   ))
                                 : null}
                         </ul>
@@ -56,7 +64,7 @@ export const CardSummary = ({ book }) => {
                             {languageId.languageName}
                         </div>
 
-                        {seriesName !== "N/A" ? (
+                        {seriesName !== "No aplica" ? (
                             <>
                                 {/*Series */}
                                 <div className={styles.series}>

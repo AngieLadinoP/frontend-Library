@@ -1,7 +1,7 @@
 export const content=[
     "Autores",
     "Libros",
-    "Categorías",
+    "Géneros",
     "Colecciones",
     "Editoriales",
     "Series",
@@ -26,7 +26,7 @@ export const headersBooks=[
     { label: "Serie", key: "seriesId" },
     { label: "volumen", key: "volumeNumber" },
     { label: "Colección", key: "collectionId" },
-    { label: "Categoría", key: "categoryId" },
+    { label: "Género", key: "categoryId" },
     { label: "ISBN 10", key: "isbn10" },
     { label: "ISBN 13", key: "isbn13" },
     { label: "Páginas", key: "pages" },
@@ -42,7 +42,7 @@ export const headersBooks=[
 
 export const headersCategories=[
     { label: "Identificador", key: "id" },
-    { label: "Categoría", key: "categoryName" },
+    { label:"Género", key: "categoryName" },
 ]
 export const headersCollections=[
     { label: "Identificador", key: "id" },

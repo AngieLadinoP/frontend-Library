@@ -167,6 +167,7 @@
 .recomendationItems {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 @media (max-width: 768px) {
     .details__container {

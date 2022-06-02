@@ -13,6 +13,7 @@
 
 .cover {
     width: auto;
+    max-width: 150px;
     height: 35vh;
     display: flex;
     align-items: center;

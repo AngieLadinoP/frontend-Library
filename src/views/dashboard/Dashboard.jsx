@@ -5,7 +5,7 @@ import { DoughnutChart } from "../../components/Chart";
 import { Link } from "react-router-dom";
 import { BarChart } from "../../components/BarChart";
 
-export const Dashboard = ({ books, collections }) => {
+export const Dashboard = ({ books, collections, authors }) => {
     const [collection, setCollection] = useState({
         idCollection: "",
         collectionName: "Todos",
@@ -103,6 +103,30 @@ export const Dashboard = ({ books, collections }) => {
             collectionName: e.target.options[e.target.selectedIndex].text,
         });
     };
+
+    const topAuthors = [];
+    authors.map((item) =>
+        topAuthors.push({
+            id: item.id,
+            name: `${item.firstName !== "NA" ? item.firstName : ""} ${
+                item.lastName !== "NA" ? item.lastName : ""
+            }`,
+            count: 0,
+        })
+    );
+
+    // For each book
+    for (let i = 0; i < books.length; i++) {
+        // For each author of the book
+        for (let j = 0; j < books[i].authorsId.length; j++) {
+            // For each author
+            for (let k = 0; k < topAuthors.length; k++) {
+                if (books[i].authorsId[j].id === topAuthors[k].id) {
+                    topAuthors[k].count += 1;
+                }
+            }
+        }
+    }
 
     return (
         <div className={styles.dashboard}>
@@ -237,6 +261,33 @@ export const Dashboard = ({ books, collections }) => {
                         />
                     </div>
                 </div>
+            </div>
+            {/* Top Authors */}
+            <div>
+                <h2>Top Autores</h2>
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Posición</th>
+                            <th>Autor</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {topAuthors
+                            .sort((a, b) => {
+                                return b.count - a.count;
+                            })
+                            .slice(0, 10)
+                            .map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td> {item.name}</td>
+                                    <td>{item.count}</td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

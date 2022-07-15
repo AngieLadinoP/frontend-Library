@@ -14,7 +14,7 @@ export const CardCover = ({ book }) => {
 
                 <div>
                     <h4 className={styles.title} id="book_title">
-                        {`${volumeNumber ? `${volumeNumber}.` : ""} ${title}`}
+                        {`${title} ${volumeNumber ? `(${volumeNumber})` : ""} `}
                     </h4>
                     <ul className={styles.authors}>
                         {authorsId.length !== 0

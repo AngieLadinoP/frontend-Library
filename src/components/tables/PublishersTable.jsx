@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { EditPublisher } from "../editItems/components/EditPublisher";
 import styles from "./table.module.css";
+
 export const PublishersTable = ({ publishers, fetchPublishers }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [info, setInfo] = useState("");
@@ -8,6 +9,13 @@ export const PublishersTable = ({ publishers, fetchPublishers }) => {
         setOpenEdit((prev) => !prev);
         setInfo(idAuthor);
     };
+    const SortArray = (x, y) => {
+        if (y.publisherName > x.publisherName) {
+            return -1;
+        }
+        return 0;
+    };
+
     return (
         <>
             <table className={styles.table}>
@@ -20,7 +28,7 @@ export const PublishersTable = ({ publishers, fetchPublishers }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {publishers.map((item, index) => (
+                    {publishers.sort(SortArray).map((item, index) => (
                         <tr key={index}>
                             <td className={styles.edit}>
                                 <p onClick={() => handleOnClick(item.id)}>

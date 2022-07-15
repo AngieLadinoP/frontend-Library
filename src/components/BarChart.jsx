@@ -20,12 +20,19 @@ export const BarChart = ({ labels, label, values }) => {
         `rgba(127, 49, 65, ${opacity})`,
         `rgba(200, 20, 191, ${opacity})`,
         `rgba(6, 78, 252, ${opacity})`,
+        `rgba(255, 206, 236, ${opacity})`,
+        `rgba(152, 150, 240, ${opacity})`,
+        `rgb(255, 245, 203, ${opacity})`,
+        `rgb(182, 227, 212, ${opacity})`,
+        `rgb(51, 167, 181, ${opacity})`,
+        `rgb(2, 3, 129 ${opacity})`,
+        `rgb(40, 116, 252 ${opacity})`,
     ];
 
     let chartColors = [];
 
     for (let i = 0; i < labels.length; i++) {
-        const position = Math.floor(Math.random() * colors.length);
+        const position = Math.floor(Math.random() * (colors.length - 1));
         chartColors.push(colors[position]);
     }
 
@@ -41,5 +48,23 @@ export const BarChart = ({ labels, label, values }) => {
             },
         ],
     };
-    return <Bar data={data} />;
+    // const options = {
+    //     plugins: {
+    //         legend: {
+    //             display: false,
+    //         },
+    //     },
+    // };
+    const options = {
+        maintainAspectRatio: false,
+        plugins: {
+            legend: false, // Hide legend
+        },
+        scales: {
+            x: {
+                display: false, // Hide X axis labels
+            },
+        },
+    };
+    return <Bar data={data} options={options} />;
 };

@@ -249,8 +249,8 @@ export const ItemDetails = ({ books, months, fetchBooks }) => {
                         <span className={styles.labelInfo}>
                             Fecha de publicación:
                         </span>
-                        {`${publishMonth ? months[publishMonth - 1] : null} ${
-                            publishDay ? publishDay : publishDay
+                        {`${publishMonth ? months[publishMonth - 1] : ""} ${
+                            publishDay ? publishDay : ""
                         }  ${publishYear}`}
                     </div>
                     {/*Description */}

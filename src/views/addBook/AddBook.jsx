@@ -19,6 +19,8 @@ export const AddBook = ({
     fetchLanguages,
     fetchCategories,
     fetchSeries,
+    sortAuthors,
+    sortCategories,
 }) => {
     const navigate = useNavigate();
     // Add new book
@@ -134,25 +136,6 @@ export const AddBook = ({
         navigate("/", { replace: true });
     };
 
-    function SortArray(x, y) {
-        if (x.categoryName < y.categoryName) {
-            return -1;
-        }
-        if (x.categoryName > y.categoryName) {
-            return 1;
-        }
-        return 0;
-    }
-    function SortArrayAuthors(x, y) {
-        if (x.firstName < y.firstName) {
-            return -1;
-        }
-        if (x.firstName > y.firstName) {
-            return 1;
-        }
-        return 0;
-    }
-
     return (
         <section className={styles.container}>
             <h1>Añadir Libro</h1>
@@ -197,7 +180,7 @@ export const AddBook = ({
                             <option value=""> Género </option>
                             {categories.length !== 0
                                 ? categories
-                                      .sort(SortArray)
+                                      .sort(sortCategories)
                                       .map((item, index) => (
                                           <option value={item.id} key={index}>
                                               {item.categoryName}
@@ -239,7 +222,7 @@ export const AddBook = ({
                                 <option value="">Autor</option>
                                 {authors.length !== 0
                                     ? authors
-                                          .sort(SortArrayAuthors)
+                                          .sort(sortAuthors)
                                           .map((item, index) => (
                                               <option
                                                   value={item.id}

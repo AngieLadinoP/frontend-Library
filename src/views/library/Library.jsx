@@ -13,12 +13,15 @@ export const Library = ({
     languages,
     publishers,
     series,
+    sortBooks,
+    sortAuthors,
 }) => {
     const [collection, setCollection] = useState({
         idCollection: "",
         collectionName: "Todos",
     });
     const [view, setView] = useState("");
+    const [orderOption, setOrderOption] = useState("");
     const visualization = [
         {
             name: "Portadas",
@@ -33,7 +36,13 @@ export const Library = ({
     ];
     const [viewIcon, setViewIcon] = useState(visualization[1].icon);
     const [searchedWord, setSearchedWord] = useState("");
-
+    const orderOptions = [
+        { name: "Titulo ascendente", value: "titleAscendant" },
+        { name: "Título descendiente", value: "titleDescendant" },
+        { name: "Autor ascendente", value: "authorAscendant" },
+        { name: "Autor descendiente", value: "authorDescendant" },
+    ];
+    let filteredBooks;
     const handleInputChange = (e) => {
         if (e.target.name === "collection") {
             setCollection({
@@ -52,8 +61,6 @@ export const Library = ({
             setSearchedWord(e.target.value);
         }
     };
-
-    let filteredBooks;
 
     if (collection.idCollection && searchedWord) {
         const collectionBooks = books.filter(
@@ -97,7 +104,19 @@ export const Library = ({
     } else {
         filteredBooks = books;
     }
-
+    const handleOrder = (e) => {
+        setOrderOption(e.target.value);
+        if (e.target.value === "titleAscendant") {
+            filteredBooks.sort(sortBooks);
+        } else if (e.target.value === "titleDescendant") {
+            filteredBooks.sort(sortBooks).reverse();
+        }
+        if (e.target.value === "AuthorAscendant") {
+            filteredBooks.sort(sortAuthors);
+        } else if (e.target.value === "AuthorDescendant") {
+            filteredBooks.sort(sortAuthors).reverse();
+        }
+    };
     return (
         <div className={styles.library}>
             <h1>
@@ -152,6 +171,28 @@ export const Library = ({
                         >
                             {visualization.length !== 0
                                 ? visualization.map((item, index) => (
+                                      <option value={item.value} key={index}>
+                                          {item.name}
+                                      </option>
+                                  ))
+                                : null}
+                        </select>
+                    </div>
+                </div>
+
+                {/*Select order*/}
+                <div className={`${styles.field} ${styles.field__select}`}>
+                    <div className={styles.selectIcon}>
+                        <BiCategory className={styles.iconView} />
+                        <select
+                            aria-label="Order"
+                            name="order"
+                            id="order"
+                            onChange={handleOrder}
+                            defaultValue="titleAscendant"
+                        >
+                            {orderOptions.length !== 0
+                                ? orderOptions.map((item, index) => (
                                       <option value={item.value} key={index}>
                                           {item.name}
                                       </option>

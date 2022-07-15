@@ -41,11 +41,43 @@ export const AdminContent = ({
 }) => {
     const navigate = useNavigate();
     const [option, setOption] = useState("Libros");
+
+    const CSVBooks = books.map((item) => ({
+        id: item.id,
+        title: item.title,
+        authorsId: item.authorsId.map((item) => `${item.id}`).toString(),
+        authorsName: item.authorsId
+            .map((item) => `${item.firstName} ${item.lastName}`)
+            .toString(),
+        publisherId: item.publisherId.id,
+        publisherName: item.publisherId.publisherName,
+        languageId: item.languageId.id,
+        languageName: item.languageId.languageName,
+        seriesId: item.seriesId.id,
+        seriesName: item.seriesId.seriesName,
+        collectionId: item.collectionId.id,
+        collectionName: item.collectionId.collectionName,
+        isbn10: item.isbn10,
+        isbn13: item.isbn13,
+        description: item.description,
+        pages: item.pages,
+        publishDay: item.publishDay,
+        publishMonth: item.publishMonth,
+        publishYear: item.publishYear,
+        summary: item.summary,
+        tags: item.tags.toString(),
+        volumeNumber: item.volumeNumber,
+        cover: item.cover,
+        readingStatus: item.readingStatus,
+        categoryId: item.categoryId.id,
+        categoryName: item.categoryId.categoryName,
+    }));
+    console.table(CSVBooks);
     let csvData =
         option === "Autores"
             ? authors
             : option === "Libros"
-            ? books
+            ? CSVBooks
             : option === "Géneros"
             ? categories
             : option === "Colecciones"
@@ -56,7 +88,7 @@ export const AdminContent = ({
             ? series
             : option === "Idiomas"
             ? languages
-            : books;
+            : CSVBooks;
 
     let csvHeaders =
         option === "Autores"
@@ -105,7 +137,6 @@ export const AdminContent = ({
             navigate("/library/add", { replace: true });
         }
     };
-    console.log(books);
     return (
         <div className={styles.adminContent}>
             <h1>Administrar contenido</h1>

@@ -116,6 +116,19 @@
     padding: 0;
 }
 
+.table,
+.table th,
+.table td {
+    border: 1px solid;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 5px;
+}
+.table th {
+    background-color: var(--colorRedOpacity);
+    padding: 10px;
+}
+
 @media (max-width: 1024px) {
     .cards_container {
         grid-template-areas: "total read" "pages read" "categories categories" "series languages" "publishers publishers";

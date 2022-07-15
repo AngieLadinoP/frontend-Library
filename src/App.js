@@ -85,6 +85,33 @@ function App() {
     "Noviembre",
     "Diciembre",
 ];
+function sortCategories(x, y) {
+    if (x.categoryName < y.categoryName) {
+        return -1;
+    }
+    if (x.categoryName > y.categoryName) {
+        return 1;
+    }
+    return 0;
+}
+function sortAuthors(x, y) {
+    if (x.firstName < y.firstName) {
+        return -1;
+    }
+    if (x.firstName > y.firstName) {
+        return 1;
+    }
+    return 0;
+}
+function sortBooks(x, y) {
+    if (x.title < y.title) {
+        return -1;
+    }
+    if (x.title > y.title) {
+        return 1;
+    }
+    return 0;
+}
   return (
     <div className="App">
       <HashRouter>
@@ -101,6 +128,8 @@ function App() {
                   languages={languages}
                   publishers={publishers}
                   series={series}
+                  sortBooks={sortBooks}
+                  sortAuthors={sortAuthors}
                 />
               }
             />
@@ -123,6 +152,8 @@ function App() {
                   fetchLanguages={fetchLanguages}
                   fetchPublishers={fetchPublishers}
                   fetchSeries={fetchSeries}
+                  sortAuthors={sortAuthors}
+                  sortCategories={sortCategories}
                 />
               }
             />
@@ -146,6 +177,7 @@ function App() {
                 <Dashboard
                 books={books}
                 collections={collections}
+                authors={authors}
                 />
               }
             />
